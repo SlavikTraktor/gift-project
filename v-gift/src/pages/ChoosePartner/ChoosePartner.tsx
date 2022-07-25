@@ -1,25 +1,35 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useMemo, useState } from "react";
-
-const names = ["Слава", "Вика", "Дима", "Антон", "Алиса", "Вероника"];
+import { getPartnersList } from "../../api/partner/getPartnersList";
+import { PARTNERS_LIST_QUERY, PARTNER_QUERY } from "../../api/partner/partner";
+import { updatePartner } from "../../api/partner/updatePartner";
 
 export const ChoosePartner = () => {
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
-  
-  
+
+  const {data: partnersList} = useQuery([PARTNERS_LIST_QUERY], getPartnersList);
+
+  const mutation = useMutation(updatePartner, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([PARTNER_QUERY]);
+    },
+  });
+
   const namesFiltered = useMemo(() => {
-    if(search === "") {
-        return [];
+    if (search === "" || !partnersList) {
+      return [];
     }
 
     const newNames: string[] = [];
-    for(let i =0; i < names.length; i++) {
-        if(names[i].toLowerCase().includes(search.toLowerCase())) {
-            newNames.push(names[i]);
-        }
+    for (let i = 0; i < partnersList.length; i++) {
+      if (partnersList[i].toLowerCase().includes(search.toLowerCase())) {
+        newNames.push(partnersList[i]);
+      }
     }
 
     return newNames;
-  }, [search]);
+  }, [partnersList, search]);
 
   return (
     <>
@@ -34,10 +44,13 @@ export const ChoosePartner = () => {
         />
       </div>
       <div>
-        {/* {names} */}
         {namesFiltered.map((v) => {
           return (
-            <div key={v} className="text-2xl duration-100 cursor-pointer hover:text-blue-400">
+            <div
+              key={v}
+              onClick={() => mutation.mutate(v)}
+              className="text-2xl duration-100 cursor-pointer hover:text-blue-400"
+            >
               {v}
             </div>
           );
