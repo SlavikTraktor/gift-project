@@ -5,11 +5,6 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import "../node_modules/react-grid-layout/css/styles.css";
-import "../node_modules/react-resizable/css/styles.css";
-
-
-
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

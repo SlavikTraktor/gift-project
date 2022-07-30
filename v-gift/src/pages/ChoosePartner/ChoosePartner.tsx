@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import { getPartnersList } from "../../api/partner/getPartnersList";
 import { PARTNERS_LIST_QUERY, PARTNER_QUERY } from "../../api/partner/partner";
 import { updatePartner } from "../../api/partner/updatePartner";
