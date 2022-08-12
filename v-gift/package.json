@@ -18,10 +18,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start-react": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start-react": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "start-tailwind": "tailwindcss -i ./src/index.css -o ./dist/output.css --watch",
     "start": "npm-run-all --parallel start-react start-tailwind"
   },
@@ -44,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.0.0-alpha.3",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
