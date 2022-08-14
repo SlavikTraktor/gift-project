@@ -10,10 +10,10 @@ import cx from "classnames";
 //   name?: string;
 // }
 
-export type TextInputProps = React.DetailedHTMLProps<
+export type TextInputProps = Omit<React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
-> & {
+>, 'onChange' | 'value' | 'type'> & {
   onChange: (v: string) => void;
   deafultValue?: string;
   value?: string;

@@ -10,5 +10,6 @@ export const RedirectRoute = ({
   redirectRoute = Routes.LOGIN,
   shouldRedirect,
 }: PrivateRouteProps) => {
-  return shouldRedirect ? <Outlet /> : <Navigate to={redirectRoute} />;
+  console.log(shouldRedirect, shouldRedirect ? <Navigate to={redirectRoute} /> : <Outlet />);
+  return shouldRedirect ? <Navigate to={redirectRoute} /> : <Outlet />;
 };

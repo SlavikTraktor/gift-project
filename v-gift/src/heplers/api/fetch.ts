@@ -55,11 +55,9 @@ axiosInstance.interceptors.request.use((config) => {
 
 export const _post = <T extends any>(
   url: string,
-  data: Record<string, unknown>
+  data: Record<string, unknown> | undefined = undefined
 ) => {
-  return axiosInstance.post<T>(url, {
-    body: JSON.stringify(data),
-  });
+  return axiosInstance.post<T>(url, JSON.stringify(data));
 };
 
 export const _get = <T extends any>(

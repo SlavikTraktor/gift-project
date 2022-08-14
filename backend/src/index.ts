@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import fastifyMiddle from "@fastify/middie";
+import cors from '@fastify/cors'
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { setUpEnvs } from "./config";
 
@@ -13,6 +14,8 @@ const fastify = Fastify({
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 fastify.register(fastifyMiddle);
+
+fastify.register(cors);
 
 fastify.register(authRoutes, { prefix: "/auth" });
 
