@@ -3,22 +3,24 @@ import axios from "axios";
 import qs from "qs";
 import { refreshApi } from "@/api/auth/refresh";
 import { Routes } from "@/constants/routes";
+import { BACKEND_URL } from "@/constants/api";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3008/",
+  baseURL: BACKEND_URL,
   timeout: 1000,
   headers: { "content-type": "application/json" },
 });
 
-axiosInstance.interceptors.request.use(
-  async (config) => {
-    const accessToken = ls.get<string | undefined>("accessToken");
+axiosInstance.interceptors.request.use(async (config) => {
+  const accessToken = ls.get<string | undefined>("accessToken");
 
-    if (!accessToken || !isTokenExpired(accessToken)) {
-      return config;
-    }
+  if (!accessToken || !isTokenExpired(accessToken)) {
+    return config;
+  }
 
-    const refreshToken = ls.get<string>("refreshToken");
+  const refreshToken = ls.get<string>("refreshToken");
+
+  try {
     const refreshResponse = await refreshApi(refreshToken);
 
     if (refreshResponse.status !== 200) {
@@ -28,15 +30,14 @@ axiosInstance.interceptors.request.use(
     ls.set("accessToken", refreshResponse.data.accessToken);
     ls.set("refreshToken", refreshResponse.data.refreshToken);
 
-    return config;
-  },
-  function (error) {
+    return Promise.reject();
+  } catch (error) {
     ls.remove("accessToken");
     ls.remove("refreshToken");
     window.location.href = Routes.LOGIN;
     return Promise.reject(error);
   }
-);
+});
 
 axiosInstance.interceptors.request.use((config) => {
   const accessToken = ls.get<string | undefined>("accessToken");
@@ -62,7 +63,7 @@ export const _post = <T extends any>(
 
 export const _get = <T extends any>(
   url: string,
-  data: Record<string, unknown>
+  data?: Record<string, unknown>
 ) => {
   return axiosInstance.get<T>(
     url + qs.stringify(data, { arrayFormat: "indices", addQueryPrefix: true })

@@ -4,10 +4,14 @@ import { PARTNER_QUERY } from "../../api/partner/partner";
 import { DesireList } from "./DesireList";
 
 export const SplitDesiresScreen = () => {
-  const { data: partner, isLoading } = useQuery([PARTNER_QUERY], getPartner);
+  const data = useQuery([PARTNER_QUERY], getPartner);
 
-  if (isLoading) {
+  if (data.isLoading) {
     return <>loading</>;
+  }
+
+  if (data.isError) {
+    return <>error</>;
   }
 
   return (
@@ -17,7 +21,7 @@ export const SplitDesiresScreen = () => {
       </div>
       <div className="border-r-4 border-neutral-700"></div>
       <div className="flex-1">
-        <DesireList name={partner as string} />
+        <DesireList name={data.data?.data as string} />
       </div>
     </div>
   );

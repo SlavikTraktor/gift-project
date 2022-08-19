@@ -12,15 +12,10 @@ import { Routes } from "./constants/routes";
 import { LoginPage } from "./pages/LoginPage";
 
 function App() {
-  const partner = useQuery([PARTNER_QUERY], getPartner);
-
   const token = useQuery([GETAUTH_QUERY], () => {
     return ls.get<string>("refreshToken");
   });
 
-  if (partner.isLoading) {
-    return null;
-  }
 
   return (
     <div className="text-center">

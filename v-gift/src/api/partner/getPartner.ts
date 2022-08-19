@@ -1,3 +1,5 @@
+import { _get } from "@/heplers/api/fetch";
+
 export const getPartner = () => {
-    return window.localStorage.getItem('partner');
-}
+  return _get<string>("/partner/partner");
+};
