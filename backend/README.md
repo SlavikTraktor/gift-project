@@ -18,12 +18,6 @@ To run code and watch
 npm run start-watch
 ```
 
-To run code and watch
-
-```
-npm run start-watch
-```
-
 To run migrations
 
 ```

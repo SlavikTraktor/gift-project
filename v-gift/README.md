@@ -11,3 +11,9 @@ To run code
 ```
 npm run start
 ```
+
+To build
+
+```
+npm run build
+```
