@@ -6,9 +6,7 @@ import bcrypt from "bcrypt";
 export const loginUser = async (name: string, pass: string) => {
   const user = await prisma.user.findFirst({
     where: {
-      name: {
-        equals: name,
-      },
+      name,
     },
   });
 
