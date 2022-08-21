@@ -16,7 +16,7 @@ export const authRoutes: FastifyPluginCallback = (fastify, options, done) => {
     },
     async (req, res) => {
       try {
-        return refreshAcessToken(req.body.refreshToken);
+        return await refreshAcessToken(req.body.refreshToken);
       } catch (error) {
         res.code(403);
         res.send(error);
@@ -35,7 +35,7 @@ export const authRoutes: FastifyPluginCallback = (fastify, options, done) => {
     },
     async (req, res) => {
       try {
-        return logout(req.body.refreshToken);
+        return await logout(req.body.refreshToken);
       } catch (error) {
         res.code(403);
         res.send(error);
@@ -54,7 +54,7 @@ export const authRoutes: FastifyPluginCallback = (fastify, options, done) => {
     },
     async (req, res) => {
       try {
-        const tokens = loginUser(req.body.name, req.body.password);
+        const tokens = await loginUser(req.body.name, req.body.password);
         res.send(tokens);
       } catch (error) {
         res.code(403);

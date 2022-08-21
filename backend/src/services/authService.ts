@@ -1,44 +1,72 @@
-import { users } from "@models/user";
-import { clearUserTokens, tokens } from "@models/refreshToken";
 import jwt from "jsonwebtoken";
 import { v4 } from "uuid";
+import { prisma } from "@/database/db";
+import bcrypt from "bcrypt";
 
-export const loginUser = (name: string, pass: string) => {
-  const user = users.find((v) => v.username === name && v.password === pass);
+export const loginUser = async (name: string, pass: string) => {
+  const user = await prisma.user.findFirst({
+    where: {
+      name: {
+        equals: name,
+      },
+    },
+  });
 
   if (!user) {
     throw new Error("User not found");
   }
 
+  const validatePassword = await bcrypt.compare(pass, user.password);
+  if (!validatePassword) {
+    throw new Error("Invalid password");
+  }
+
   return generateNewTokenPair(user.id);
 };
 
-export const refreshAcessToken = (refreshToken: string) => {
-  const userTokenIndex = tokens.findIndex((v) => v.token === refreshToken);
-  if (userTokenIndex === -1) {
-    throw new Error("User not found");
-  }
-
-  const pair = generateNewTokenPair(tokens[userTokenIndex].userId);
-  tokens[userTokenIndex].token = pair.refreshToken;
-
-  return pair;
-};
-
-export const logout = (refreshToken: string) => {
-  const token = tokens.find((v) => v.token === refreshToken);
+export const refreshAcessToken = async (refreshToken: string) => {
+  const token = await prisma.token.findFirst({
+    where: {
+      refreshToken,
+    },
+  });
   if (!token) {
     throw new Error("User not found");
   }
 
-  clearUserTokens(token.userId);
+  const pair = await generateNewTokenPair(token.userId);
+
+  await prisma.token.delete({
+    where: {
+      id: token.id,
+    },
+  });
+
+  return pair;
 };
 
-const generateNewTokenPair = (userId: number) => {
+export const logout = async (refreshToken: string) => {
+  const token = await prisma.token.findFirst({
+    where: {
+      refreshToken,
+    },
+  });
+  if (!token) {
+    throw new Error("User not found");
+  }
+
+  await prisma.token.deleteMany({
+    where: {
+      userId: token.userId,
+    },
+  });
+};
+
+const generateNewTokenPair = async (userId: number) => {
   const accessToken = jwt.sign({ id: userId }, process.env.AUTH_SECRET, {
     expiresIn: "15m",
   });
-  const refreshToken = createRefreshToken(userId);
+  const refreshToken = await createRefreshToken(userId);
 
   return {
     accessToken,
@@ -46,10 +74,15 @@ const generateNewTokenPair = (userId: number) => {
   };
 };
 
-const createRefreshToken = (userId: number) => {
+const createRefreshToken = async (userId: number) => {
   const token = v4();
 
-  tokens.push({ userId, token });
+  await prisma.token.create({
+    data: {
+      refreshToken: token,
+      userId,
+    },
+  });
 
   return token;
 };
