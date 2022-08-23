@@ -9,7 +9,7 @@ npm install
 To run code
 
 ```
-npm run start
+npm run start-run
 ```
 
 To run code and watch

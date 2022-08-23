@@ -1,3 +1,5 @@
+import { User } from "@prisma/client";
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -13,7 +15,9 @@ interface AuthenticatedUser {
 
 declare module "fastify" {
   export interface FastifyRequest {
-    user?: AuthenticatedUser;
+    user?: User & {
+      partner: User | null;
+    };
   }
 }
 

@@ -1,3 +1,4 @@
+import { prisma } from "@/database/db";
 import { FastifyReply, FastifyRequest } from "fastify";
 import jwt from "jsonwebtoken";
 
@@ -21,7 +22,21 @@ export const authorize = async (req: FastifyRequest, res: FastifyReply) => {
   }
 
   const jwtData = jwt.decode(auth) as jwt.JwtPayload;
-  req.user = {
-    id: jwtData.id,
-  };
+
+  const resUser = await prisma.user.findFirst({
+    where: {
+      id: jwtData.id,
+    },
+    include: {
+      partner: true,
+    },
+  });
+
+  if (!resUser) {
+    res.code(401);
+    res.send("Not Authorized");
+    return;
+  }
+
+  req.user = resUser;
 };
