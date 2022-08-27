@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(async (config) => {
     ls.set("accessToken", refreshResponse.data.accessToken);
     ls.set("refreshToken", refreshResponse.data.refreshToken);
 
-    return Promise.reject();
+    return Promise.resolve(config);
   } catch (error) {
     ls.remove("accessToken");
     ls.remove("refreshToken");

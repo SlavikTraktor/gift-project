@@ -19,7 +19,7 @@ model User {
   partner         User?   @relation("Partner", fields: [partnerId], references: [id])
   desires         Wish[]
   tokens          Token[]
-  chesenByPartner User[]  @relation("Partner")
+  chosenByPartner User[]  @relation("Partner")
 }
 
 model Token {

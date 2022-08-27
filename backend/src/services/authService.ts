@@ -62,7 +62,7 @@ export const logout = async (refreshToken: string) => {
 
 const generateNewTokenPair = async (userId: number) => {
   const accessToken = jwt.sign({ id: userId }, process.env.AUTH_SECRET, {
-    expiresIn: "15m",
+    expiresIn: "15s",
   });
   const refreshToken = await createRefreshToken(userId);
 

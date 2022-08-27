@@ -22,7 +22,6 @@ export const DesireList = ({ name, editable = false }: DesireListProps) => {
       setDesires([..._desires]);
   }, [_desires]);
 
-
   const renderDesire = useCallback((desire: string, index: number) => {
     return <Desire
         key={desire}
