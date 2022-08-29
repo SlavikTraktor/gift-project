@@ -15,7 +15,7 @@ interface AuthenticatedUser {
 
 declare module "fastify" {
   export interface FastifyRequest {
-    user?: User & {
+    user: User & {
       partner: User | null;
     };
   }
