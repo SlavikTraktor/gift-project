@@ -31,7 +31,7 @@ export const TextInput = ({
   return (
     <input
       className={cx(
-        "bg-neutral-900 border-neutral-600 text-neutral-100 px-4 py-1.5 border rounded-sm outline-none focus:border-blue-400",
+        "bg-white text-main-500 px-4 py-2 rounded outline-none focus:ring-1 focus:ring-main-300",
         className
       )}
       defaultValue={deafultValue}
