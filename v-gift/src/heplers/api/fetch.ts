@@ -1,25 +1,18 @@
 import * as ls from "local-storage";
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs";
 import { refreshApi } from "@/api/auth/refresh";
 import { Routes } from "@/constants/routes";
 import { BACKEND_URL } from "@/constants/api";
 
-const axiosInstance = axios.create({
+const config: AxiosRequestConfig = {
   baseURL: BACKEND_URL,
   timeout: 1000,
   headers: { "content-type": "application/json" },
-});
+};
 
-axiosInstance.interceptors.request.use(async (config) => {
-  const accessToken = ls.get<string | undefined>("accessToken");
-
-  if (!accessToken || !isTokenExpired(accessToken)) {
-    return config;
-  }
-
+const updateTokens = async () => {
   const refreshToken = ls.get<string>("refreshToken");
-
   try {
     const refreshResponse = await refreshApi(refreshToken);
 
@@ -30,43 +23,52 @@ axiosInstance.interceptors.request.use(async (config) => {
     ls.set("accessToken", refreshResponse.data.accessToken);
     ls.set("refreshToken", refreshResponse.data.refreshToken);
 
-    return Promise.resolve(config);
+    return refreshResponse.data;
   } catch (error) {
     ls.remove("accessToken");
     ls.remove("refreshToken");
-    window.location.href = Routes.LOGIN;
-    return Promise.reject(error);
+    throw error;
   }
-});
+};
 
-axiosInstance.interceptors.request.use((config) => {
+const addAuthData = async (config: AxiosRequestConfig) => {
   const accessToken = ls.get<string | undefined>("accessToken");
 
-  if (!accessToken) {
+  if (!accessToken || !isTokenExpired(accessToken)) {
     return config;
   }
 
-  config.headers = {
-    ...config.headers,
-    Authorization: `Bearer ${accessToken}`,
-  };
+  try {
+    const tokens = await updateTokens();
 
-  return config;
-});
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${tokens.accessToken}`,
+    };
 
-export const _post = <T extends any>(
+    return config;
+  } catch (error) {
+    window.location.href = Routes.LOGIN;
+    throw error;
+  }
+};
+
+export const _post = async <T extends any>(
   url: string,
   data: Record<string, unknown> | undefined = undefined
 ) => {
-  return axiosInstance.post<T>(url, JSON.stringify(data));
+  const configAuth = await addAuthData(config);
+  return axios.post<T>(url, JSON.stringify(data), configAuth);
 };
 
-export const _get = <T extends any>(
+export const _get = async <T extends any>(
   url: string,
   data?: Record<string, unknown>
 ) => {
-  return axiosInstance.get<T>(
-    url + qs.stringify(data, { arrayFormat: "indices", addQueryPrefix: true })
+  const configAuth = await addAuthData(config);
+  return axios.get<T>(
+    url + qs.stringify(data, { arrayFormat: "indices", addQueryPrefix: true }),
+    configAuth
   );
 };
 
