@@ -4,8 +4,8 @@ import { TextInput } from "@/components/form/TextInput/TextInput";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
 import * as ls from "local-storage";
-import { GETAUTH_QUERY } from "@/api/partner/partner";
 import { ACCESS_TOKEN_LS, REFRESH_TOKEN_LS } from "@/constants/ls";
+import { GETAUTH_QUERY } from "@/constants/api";
 
 export const LoginPage = () => {
   const [login, setLogin] = useState("");

@@ -3,13 +3,13 @@ import { ChoosePartner } from "./pages/ChoosePartner";
 import { useQuery } from "@tanstack/react-query";
 import * as ls from "local-storage";
 
-import { GETAUTH_QUERY } from "./api/partner/partner";
-import { SplitDesiresScreen } from "./pages/SplitDesiresScreen/SplitDesiresScreen";
+import { SplitWishesScreen } from "./pages/SplitWishesScreen/SplitWishesScreen";
 import { Route, Routes as ReactRouterRoutes } from "react-router-dom";
 import { RedirectRoute } from "@/components/RedirectRoute";
 import { Routes } from "./constants/routes";
 import { LoginPage } from "@/pages/LoginPage";
 import { TestPage } from "@/pages/TestPage";
+import { GETAUTH_QUERY } from "./constants/api";
 
 function App() {
   const token = useQuery([GETAUTH_QUERY], () => {
@@ -28,7 +28,7 @@ function App() {
           element={<RedirectRoute shouldRedirect={!token.data} />}
         >
           <Route path={Routes.PARTNER} element={<ChoosePartner />} />
-          <Route path={Routes.HOME} element={<SplitDesiresScreen />} />
+          <Route path={Routes.HOME} element={<SplitWishesScreen />} />
           <Route path={Routes.TEST} element={<TestPage />} />
         </Route>
         <Route

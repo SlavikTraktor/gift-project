@@ -1,13 +1,14 @@
 import { DensitySmall } from "@mui/icons-material";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useDrag, useDrop } from "react-dnd";
 import { Identifier, XYCoord } from "dnd-core";
 
 import cx from "classnames";
+import { WishType } from "@/types/Wish";
 
-export interface DesireProps {
+export interface WishProps {
   editable: boolean;
-  desire: string;
+  wish: WishType;
   index: number;
   moveDnd: (dragIndex: number, hoverIndex: number) => void;
   dndnamespace: string;
@@ -19,7 +20,7 @@ interface DragItem {
   type: string;
 }
 
-export const Desire = ({ desire, index, moveDnd, dndnamespace }: DesireProps) => {
+export const Wish = ({ wish, index, moveDnd, dndnamespace }: WishProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop<
@@ -27,7 +28,7 @@ export const Desire = ({ desire, index, moveDnd, dndnamespace }: DesireProps) =>
     void,
     { handlerId: Identifier | null }
   >({
-    accept: "desire" + dndnamespace,
+    accept: "wish" + dndnamespace,
     collect(monitor) {
       return {
         handlerId: monitor.getHandlerId(),
@@ -72,7 +73,6 @@ export const Desire = ({ desire, index, moveDnd, dndnamespace }: DesireProps) =>
         return;
       }
 
-      // console.log(dragIndex, hoverIndex);
       // Time to actually perform the action
       moveDnd(dragIndex, hoverIndex);
 
@@ -85,9 +85,9 @@ export const Desire = ({ desire, index, moveDnd, dndnamespace }: DesireProps) =>
   });
 
   const [{ isDragging }, drag, dragPreview] = useDrag({
-    type: "desire" + dndnamespace,
+    type: "wish" + dndnamespace,
     item: () => {
-      return { desire, index };
+      return { wish: wish.id, index };
     },
     collect: (monitor: any) => ({
       isDragging: monitor.isDragging(),
@@ -100,18 +100,18 @@ export const Desire = ({ desire, index, moveDnd, dndnamespace }: DesireProps) =>
     
     <div
       ref={ref}
-      className={cx("border border-neutral-700 rounded m-3 p-2 flex h-56", {
+      className={cx("bg-main-250 rounded m-3 p-2 flex h-56", {
         "opacity-0": isDragging,
       })}
     >
       <div
         ref={drag}
-        className="w-4 flex items-center cursor-pointer"
+        className="flex items-center cursor-pointer"
         data-handler-id={handlerId}
       >
         <DensitySmall />
       </div>
-      <div className="flex-1 text-center">{desire}</div>
+      <div className="flex-1 text-center">{wish.title}</div>
     </div>
   );
 };

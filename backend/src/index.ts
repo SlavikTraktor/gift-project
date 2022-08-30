@@ -7,6 +7,7 @@ import { setUpEnvs } from "./config";
 import { authRoutes } from "@routes/auth";
 import { partnerRoutes } from "@routes/partner";
 import { testRoutes } from "./routes/test";
+import { wishRoutes } from "./routes/wish/wishRoutes";
 
 setUpEnvs();
 
@@ -19,8 +20,8 @@ fastify.register(fastifyMiddle);
 fastify.register(cors);
 
 fastify.register(authRoutes, { prefix: "/auth" });
-
 fastify.register(partnerRoutes, { prefix: "/partner" });
+fastify.register(wishRoutes, { prefix: "/wish" });
 fastify.register(testRoutes, { prefix: "/test" });
 
 // Run the server!
