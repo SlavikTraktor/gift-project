@@ -1,9 +1,10 @@
 import { _get } from "@/heplers/api/fetch";
 
 interface GetPartnerProps {
-  partner: null | any;
+  id: number;
+  name: string
 }
 
 export const getPartner = () => {
-  return _get<GetPartnerProps>("/partner/partner");
+  return _get<GetPartnerProps | null>("/partner/partner");
 };

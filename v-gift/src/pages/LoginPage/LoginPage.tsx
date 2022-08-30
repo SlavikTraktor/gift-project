@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
 import * as ls from "local-storage";
 import { GETAUTH_QUERY } from "@/api/partner/partner";
+import { ACCESS_TOKEN_LS, REFRESH_TOKEN_LS } from "@/constants/ls";
 
 export const LoginPage = () => {
   const [login, setLogin] = useState("");
@@ -18,8 +19,8 @@ export const LoginPage = () => {
     },
     {
       onSuccess: (res) => {
-        ls.set("refreshToken", res.data.refreshToken);
-        ls.set("accessToken", res.data.accessToken);
+        ls.set(REFRESH_TOKEN_LS, res.data.refreshToken);
+        ls.set(ACCESS_TOKEN_LS, res.data.accessToken);
 
         queryClient.invalidateQueries([GETAUTH_QUERY]);
       },

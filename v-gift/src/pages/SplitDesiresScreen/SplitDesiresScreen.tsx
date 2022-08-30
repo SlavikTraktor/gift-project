@@ -16,7 +16,7 @@ export const SplitDesiresScreen = () => {
     return <>error</>;
   }
 
-  if (!data.data.partner) {
+  if (!data.data) {
     return <Navigate to={Routes.PARTNER} />;
   }
 
@@ -27,7 +27,7 @@ export const SplitDesiresScreen = () => {
       </div>
       <div className="border-r-4 border-neutral-700"></div>
       <div className="flex-1">
-        <DesireList name={"Partner"} />
+        <DesireList name={data.data.name} />
       </div>
     </div>
   );

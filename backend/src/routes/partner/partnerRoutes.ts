@@ -10,6 +10,7 @@ import {
   ChoosePatrnerValidation,
   ChoosePatrnerType,
 } from "./validations/ChoosePartnerValidation";
+import _ from "lodash";
 
 export const partnerRoutes: FastifyPluginCallback = (
   fastify,
@@ -51,7 +52,11 @@ export const partnerRoutes: FastifyPluginCallback = (
         where: {
           name: req.query.partnerName,
         },
-      })) as User;
+        select: {
+          id: true,
+          name: true,
+        },
+      })) as Pick<User, "id" | "name">;
 
       await prisma.user.update({
         where: {
@@ -61,12 +66,12 @@ export const partnerRoutes: FastifyPluginCallback = (
           partnerId: newPartner.id,
         },
       });
-      res.send(req.user);
+      res.send(newPartner);
     }
   );
 
   fastify.get("/partner", (req, res) => {
-    res.send(req.user.partner);
+    res.send(_.pick(req.user.partner, ["id", "name"]));
   });
 
   done();

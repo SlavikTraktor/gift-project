@@ -1,14 +1,39 @@
 import { searchPartners } from "@/api/partner/searchPartners";
 import { AsyncSelect } from "@/components/form/AsyncSelect/AsyncSelect";
 import { SelectOption } from "@/types/selectOption";
+import { useMutation } from "@tanstack/react-query";
 import { useCallback, useState } from "react";
+import * as ls from "local-storage";
+import { choosePartner } from "@/api/partner/updatePartner";
+import { PARTNER_NAME_LS } from "@/constants/ls";
+import { useNavigate } from "react-router-dom";
+import { Routes } from "@/constants/routes";
 
 export const ChoosePartner = () => {
   const [value, setValue] = useState<SelectOption | null>(null);
 
-  const onChange = useCallback((newVal: SelectOption | null) => {
-    setValue(newVal);
-  }, []);
+  const navigate = useNavigate();
+
+  const choosePartnerMutation = useMutation(
+    ({ partnerName }: { partnerName: string }) => {
+      return choosePartner(partnerName);
+    },
+    {
+      onSuccess: (res) => {
+        ls.set(PARTNER_NAME_LS, res.data.name);
+        navigate(Routes.HOME);
+      },
+    }
+  );
+
+  const onChange = useCallback(
+    (newVal: SelectOption | null) => {
+      setValue(newVal);
+
+      newVal && choosePartnerMutation.mutate({ partnerName: newVal.label });
+    },
+    [choosePartnerMutation]
+  );
 
   const loadOptions = useCallback(
     (inputValue: string, callback: (options: SelectOption[]) => void) => {

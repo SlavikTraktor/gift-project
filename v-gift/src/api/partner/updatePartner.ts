@@ -1,6 +1,12 @@
-export const updatePartner = (v: string) => {
-    return new Promise<void>((res) => {
-        window.localStorage.setItem('partner', v);
-        res();
-    });
+import { _get } from "@/heplers/api/fetch";
+
+export interface ChoosePartnerResponse {
+  id: number;
+  name: string;
 }
+
+export const choosePartner = (partnerName: string) => {
+  return _get<ChoosePartnerResponse>("/partner/choose", {
+    partnerName,
+  });
+};
