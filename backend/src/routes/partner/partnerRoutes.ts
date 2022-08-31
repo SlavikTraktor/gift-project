@@ -11,6 +11,7 @@ import {
   ChoosePatrnerType,
 } from "./validations/ChoosePartnerValidation";
 import _ from "lodash";
+import { userRepo } from "@/repositories/userRepo";
 
 export const partnerRoutes: FastifyPluginCallback = (
   fastify,
@@ -48,15 +49,14 @@ export const partnerRoutes: FastifyPluginCallback = (
       },
     },
     async (req, res) => {
-      const newPartner = (await prisma.user.findFirst({
-        where: {
-          name: req.query.partnerName,
-        },
-        select: {
-          id: true,
-          name: true,
-        },
-      })) as Pick<User, "id" | "name">;
+      const newPartner = await userRepo.getByName(req.query.partnerName, {
+        id: true,
+        name: true,
+      });
+
+      if (!newPartner) {
+        throw new Error();
+      }
 
       await prisma.user.update({
         where: {
