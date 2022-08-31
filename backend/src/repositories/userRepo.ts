@@ -12,16 +12,15 @@ const getById = (id: number, select?: (keyof Prisma.UserSelect)[]) =>
     },
   });
 
-const getByName = async <U extends Prisma.UserSelect>(
+const getByName = async <T extends Prisma.UserFindFirstArgs>(
   name: string,
-  select?: U
+  args?: Prisma.SelectSubset<T, Prisma.UserFindFirstArgs>
 ) => {
-  const res = await prisma.user.findFirst<{
-    where: Prisma.UserWhereInput;
-    select: U;
-  }>({
-    select: select!,
-    where: { name },
+  const res = await prisma.user.findFirst<
+    Prisma.SelectSubset<T, Prisma.UserFindFirstArgs>
+  >({
+    ...args!,
+    where: { ...args?.where, name },
   });
   return res;
 };

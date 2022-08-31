@@ -50,8 +50,10 @@ export const partnerRoutes: FastifyPluginCallback = (
     },
     async (req, res) => {
       const newPartner = await userRepo.getByName(req.query.partnerName, {
-        id: true,
-        name: true,
+        select: {
+          id: true,
+          name: true,
+        },
       });
 
       if (!newPartner) {
