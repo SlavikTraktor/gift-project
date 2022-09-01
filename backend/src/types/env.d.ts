@@ -5,6 +5,8 @@ declare global {
     interface ProcessEnv {
       APP_PORT: number;
       AUTH_SECRET: string;
+      APP_ENV?: string;
+      DATABASE_URL: string;
     }
   }
 }

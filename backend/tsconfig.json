@@ -1,6 +1,7 @@
 {
   "ts-node": {
-    "files": true
+    "files": true,
+    "require": ["tsconfig-paths/register"]
   },
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
@@ -40,7 +41,7 @@
       "@services/*": ["services/*"]
     },
     // "paths": {},                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
-    // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
+    // "rootDirs": ["./tests", "./src"],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     "typeRoots": [
       "./src/types"
     ] /* Specify multiple folders that act like './node_modules/@types'. */,
@@ -111,5 +112,6 @@
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
-  }
+  },
+  "exclude": ["./tests", "./src/seed", "./dist"]
 }

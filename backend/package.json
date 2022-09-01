@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./dist/index.js",
     "start-run": "tsc && tsc-alias && node ./dist/index.js",
     "start-watch": "tsc && tsc-alias && npm-run-all --parallel watch-ts watch-alias watch-js",
@@ -12,7 +11,10 @@
     "watch-js": "nodemon",
     "migrate:create": "prisma migrate dev --create-only",
     "migrate": "prisma migrate dev",
-    "seed": "ts-node"
+    "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
+    "seed": "ts-node",
+    "test:setup": "node ./tests/setUpBeforeTests.js",
+    "test": "npm run test:setup && set APP_ENV=test&& tap --watch --ts ./tests"
   },
   "author": "",
   "license": "ISC",
@@ -36,12 +38,17 @@
     "@types/jsonwebtoken": "^8.5.8",
     "@types/lodash": "^4.14.184",
     "@types/node": "^18.6.3",
+    "@types/tap": "^15.0.7",
     "@types/uuid": "^8.3.4",
+    "dotenv-cli": "^6.0.0",
     "nodemon": "^2.0.19",
     "npm-run-all": "^4.1.5",
+    "pino-pretty": "^9.1.0",
     "prisma": "^4.2.1",
+    "tap": "^16.3.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.7.0",
+    "tsconfig-paths": "^4.1.0",
     "typescript": "^4.7.4"
   },
   "nodemonConfig": {
