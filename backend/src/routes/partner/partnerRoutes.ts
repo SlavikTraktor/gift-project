@@ -1,11 +1,9 @@
 import { FastifyPluginCallback } from "fastify";
 import { authorize } from "@middleware/authorize";
-import { prisma } from "@/database/db";
 import {
   SearchPatrnersType,
   SearchPatrnersValidation,
 } from "./validations/SearchPatrnersValidation";
-import { User } from "@prisma/client";
 import {
   ChoosePatrnerValidation,
   ChoosePatrnerType,
@@ -31,9 +29,7 @@ export const partnerRoutes: FastifyPluginCallback = (
     },
     async (req, res) => {
       const search = req.query.search.toLowerCase();
-      const allUserNames = await prisma.$queryRaw<
-        Pick<User, "id" | "name">[]
-      >`SELECT id, name from User where lower(name) like '%' || ${search} || '%' limit 10`;
+      const allUserNames = await userRepo.searchUsers(search);
 
       res.send({ users: allUserNames });
     }
@@ -49,31 +45,21 @@ export const partnerRoutes: FastifyPluginCallback = (
       },
     },
     async (req, res) => {
-      const newPartner = await userRepo.getByName(req.query.partnerName, {
-        select: {
-          id: true,
-          name: true,
-        },
-      });
+      const newPartner = await userRepo.getByName(req.query.partnerName);
 
       if (!newPartner) {
         throw new Error();
       }
 
-      await prisma.user.update({
-        where: {
-          id: req.user.id,
-        },
-        data: {
-          partnerId: newPartner.id,
-        },
-      });
-      res.send(newPartner);
+      await userRepo.addPartner(req.user.id, newPartner.id);
+      res.send(_.pick(newPartner, ["id", "name"]));
     }
   );
 
   fastify.get("/partner", (req, res) => {
-    res.send(_.pick(req.user.partner, ["id", "name"]));
+    res.send(
+      req.user.partner ? _.pick(req.user.partner, ["id", "name"]) : null
+    );
   });
 
   done();

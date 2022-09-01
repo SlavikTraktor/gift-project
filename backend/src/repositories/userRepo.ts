@@ -1,14 +1,10 @@
 import { prisma } from "@/database/db";
-import { generateObjectFilledTrue } from "@/helpers/generateSelect";
 import { Prisma, User } from "@prisma/client";
 
-const getById = (id: number, select?: (keyof Prisma.UserSelect)[]) =>
+const getById = (id: number) =>
   prisma.user.findFirst({
     where: {
       id,
-    },
-    select: {
-      name: true,
     },
   });
 
@@ -25,7 +21,26 @@ const getByName = async <T extends Prisma.UserFindFirstArgs>(
   return res;
 };
 
+const addPartner = async (userId: number, partnerId: number) => {
+  return await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      partnerId: partnerId,
+    },
+  });
+};
+
+const searchUsers = async (search: string, countToGet = 10) => {
+  return prisma.$queryRaw<
+    Pick<User, "id" | "name">[]
+  >`SELECT id, name from User where lower(name) like '%' || ${search} || '%' limit ${countToGet}`;
+};
+
 export const userRepo = {
   getById,
   getByName,
+  addPartner,
+  searchUsers,
 };
