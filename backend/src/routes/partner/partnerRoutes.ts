@@ -48,7 +48,9 @@ export const partnerRoutes: FastifyPluginCallback = (
       const newPartner = await userRepo.getByName(req.query.partnerName);
 
       if (!newPartner) {
-        throw new Error();
+        res.code(403);
+        res.send("Partner not found")
+        return;
       }
 
       await userRepo.addPartner(req.user.id, newPartner.id);

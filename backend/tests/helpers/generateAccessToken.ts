@@ -8,8 +8,6 @@ export const generateAccessToken = (userId: number) => {
     override: true,
   });
 
-  console.log(process.env.AUTH_SECRET);
-
   return jwt.sign({ id: userId }, process.env.AUTH_SECRET, {
     expiresIn: "30m",
   });

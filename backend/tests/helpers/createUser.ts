@@ -9,7 +9,7 @@ import { v4 } from "uuid";
 export const createUser = async (
   name?: string,
   password?: string,
-  data?: Prisma.UserCreateArgs["data"]
+  data?: Partial<Prisma.UserCreateArgs["data"]>
 ) => {
   const username = name || v4();
   const salt = await bcrypt.genSalt(10);
