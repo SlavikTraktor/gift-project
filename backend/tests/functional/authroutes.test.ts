@@ -80,13 +80,13 @@ tap.test("Auth tests", async (t) => {
       refreshToken: tokens.refreshToken,
     });
 
-    // t.equal(logoutResponse.statusCode, 200);
-    // const usersTokensCount = await prisma.token.count({
-    //   where: {
-    //     userId: user.id,
-    //   },
-    // });
-    // t.equal(usersTokensCount, 0);
+    t.equal(logoutResponse.statusCode, 200);
+    const usersTokensCount = await prisma.token.count({
+      where: {
+        userId: user.id,
+      },
+    });
+    t.equal(usersTokensCount, 0);
   });
 
   t.test("/logout should fail when wrong refresh token provided", async (t) => {
