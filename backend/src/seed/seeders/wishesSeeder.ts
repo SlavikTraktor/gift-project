@@ -10,7 +10,7 @@ export async function wishesSeeder(
   desiresCount = WISHES_COUNT
 ) {
   console.time("seedWishes");
-  const wishIds = [];
+  const wishIds: number[] = [];
   for (let i = 0; i < desiresCount; i++) {
     const title = `${faker.word.adjective()} ${faker.word.noun()}`;
     const wish = await prisma.wish.create({

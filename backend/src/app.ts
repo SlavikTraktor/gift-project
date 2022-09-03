@@ -12,7 +12,7 @@ import { wishRoutes } from "@routes/wish/wishRoutes";
 setUpEnvs();
 
 const fastify = Fastify({
-  logger: true,
+  logger: process.env.APP_ENV === 'dev',
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 fastify.register(fastifyMiddle);
