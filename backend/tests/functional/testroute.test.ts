@@ -1,6 +1,4 @@
 import { app } from "@/app";
-import { prisma } from "@/database/db";
-import { User } from "@prisma/client";
 import tap from "tap";
 import { createUser } from "tests/helpers/createUser";
 

@@ -1,9 +1,10 @@
 import { app } from "@/app";
+import qs from "qs";
 
-export const postInject = (
+export const getInject = (
   instance: typeof app,
   url: string,
-  body: any,
+  queryParams?: any,
   authToken?: string
 ) => {
   const headers: any = {
@@ -15,9 +16,8 @@ export const postInject = (
   }
 
   return instance.inject({
-    method: "POST",
-    url,
-    payload: JSON.stringify(body),
+    method: "GET",
+    url: url + qs.stringify(queryParams, { arrayFormat: "indices", addQueryPrefix: true }),
     headers,
   });
 };

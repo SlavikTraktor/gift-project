@@ -6,7 +6,7 @@ import { setUpEnvs } from "./config";
 
 import { authRoutes } from "@routes/auth";
 import { partnerRoutes } from "@routes/partner";
-import { testRoutes } from "@routes/test";
+import { privateTestRoutes, testRoutes } from "@routes/test";
 import { wishRoutes } from "@routes/wish/wishRoutes";
 
 setUpEnvs();
@@ -23,5 +23,6 @@ fastify.register(authRoutes, { prefix: "/auth" });
 fastify.register(partnerRoutes, { prefix: "/partner" });
 fastify.register(wishRoutes, { prefix: "/wish" });
 fastify.register(testRoutes, { prefix: "/test" });
+fastify.register(privateTestRoutes, { prefix: "/testprivate" });
 
 export const app = fastify;
