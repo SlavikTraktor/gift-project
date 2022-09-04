@@ -2,7 +2,7 @@ import { WishType } from "@/types/Wish";
 import { useCallback, useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
-import { Wish } from "./Wish";
+import { WishDraggable } from "./Wish";
 
 export interface WishesListProps {
   name: string;
@@ -34,7 +34,7 @@ export const WishesList = ({
   const renderWish = useCallback(
     (wish: WishType, index: number) => {
       return (
-        <Wish
+        <WishDraggable
           key={wish.id}
           wish={wish}
           editable={editable}

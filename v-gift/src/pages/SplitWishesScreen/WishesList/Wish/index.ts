@@ -1,1 +1,1 @@
-export * from "./Wish";
+export * from "./WishDraggable";
