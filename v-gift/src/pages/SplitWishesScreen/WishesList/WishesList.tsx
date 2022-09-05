@@ -1,8 +1,12 @@
+import { updateWishesOrder as updateWishesOrderApi } from "@/api/wish/updateWishesOrder";
 import { WishType } from "@/types/Wish";
+import { useMutation } from "@tanstack/react-query";
 import { useCallback, useEffect, useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { WishDraggable } from "./Wish";
+
+import { useDebouncedCallback } from "use-debounce";
 
 export interface WishesListProps {
   name: string;
@@ -16,15 +20,28 @@ export const WishesList = ({
   wishes: wishes_,
 }: WishesListProps) => {
   const [wishes, setWishes] = useState<WishType[]>([]);
+
+  const updateOrderMutation = useMutation((wishes: WishType[]) => {
+    return updateWishesOrderApi(wishes);
+  });
+
+  const updateOrderDebounced = useDebouncedCallback((wishes: WishType[]) => {
+    updateOrderMutation.mutate(wishes);
+  }, 2000);
+
+  const onDndDrop = useCallback(() => {
+    updateOrderDebounced(wishes);
+  }, [updateOrderDebounced, wishes]);
+
   const moveDnd = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      if (!wishes_.length) return;
-      const item = wishes_[dragIndex];
-      wishes_[dragIndex] = wishes_[hoverIndex];
-      wishes_[hoverIndex] = item;
-      setWishes([...wishes_]);
+      if (!wishes.length) return;
+      const item = wishes[dragIndex];
+      wishes[dragIndex] = wishes[hoverIndex];
+      wishes[hoverIndex] = item;
+      setWishes([...wishes]);
     },
-    [wishes_]
+    [wishes]
   );
 
   useEffect(() => {
@@ -41,10 +58,11 @@ export const WishesList = ({
           moveDnd={moveDnd}
           index={index}
           dndnamespace={name}
+          onDrop={onDndDrop}
         />
       );
     },
-    [editable, moveDnd, name]
+    [editable, moveDnd, name, onDndDrop]
   );
 
   return (

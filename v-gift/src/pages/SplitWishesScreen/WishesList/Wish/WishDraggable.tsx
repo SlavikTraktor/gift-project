@@ -12,6 +12,7 @@ export interface WishDraggableProps {
   wish: WishType;
   index: number;
   moveDnd: (dragIndex: number, hoverIndex: number) => void;
+  onDrop: () => void;
   dndnamespace: string;
 }
 
@@ -27,6 +28,7 @@ export const WishDraggable = ({
   moveDnd,
   dndnamespace,
   editable,
+  onDrop,
 }: WishDraggableProps) => {
   const ref = useRef<HTMLDivElement>(null);
 
@@ -89,6 +91,9 @@ export const WishDraggable = ({
       // to avoid expensive index searches.
       item.index = hoverIndex;
     },
+    drop: () => {
+      onDrop();
+    },
   });
 
   const [{ isDragging }, drag, dragPreview] = useDrag({
@@ -111,11 +116,17 @@ export const WishDraggable = ({
       })}
     >
       <div
-        ref={drag}
-        className="flex items-center cursor-pointer"
-        data-handler-id={handlerId}
+        ref={editable ? drag : undefined}
+        className={cx("flex items-center cursor-pointer", {
+          "cursor-default": !editable,
+        })}
+        data-handler-id={editable ? handlerId : undefined}
       >
-        <DensitySmall />
+        <DensitySmall
+          className={cx({
+            "text-main-200": !editable,
+          })}
+        />
       </div>
       <Wish wish={wish} editable={editable} />
     </div>

@@ -17,7 +17,7 @@ export const Wish = ({ wish, editable }: WishProps) => {
   return (
     <div className="flex-1 text-center p-2">
       <h3
-        className="mb-2 rounded outline-none focus:ring-1 focus:ring-secondary-500"
+        className="mb-2 text-lg rounded outline-none focus:ring-1 focus:ring-secondary-500"
         {...editableProps}
         onInput={(e) => console.log(e.currentTarget.innerHTML)}
       >
