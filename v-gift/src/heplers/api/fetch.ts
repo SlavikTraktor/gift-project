@@ -3,7 +3,7 @@ import axios, { AxiosRequestConfig } from "axios";
 import qs from "qs";
 import { refreshApi } from "@/api/auth/refresh";
 import { Routes } from "@/constants/routes";
-import { BACKEND_URL } from "@/constants/api";
+import { BACKEND_URL, MAX_REFRESH_ERRORS_COUNT } from "@/constants/api";
 import { ACCESS_TOKEN_LS, REFRESH_TOKEN_LS } from "@/constants/ls";
 
 const config: AxiosRequestConfig = {
@@ -11,6 +11,10 @@ const config: AxiosRequestConfig = {
   timeout: 1000,
   headers: { "content-type": "application/json" },
 };
+
+// If few requests are made at the same time it can be possible
+// to unlogin cause second refresh request fails. So this prevents this behaviour. 
+let errorCount = 0;
 
 const updateTokens = async () => {
   const refreshToken = ls.get<string>("refreshToken");
@@ -23,11 +27,14 @@ const updateTokens = async () => {
 
     ls.set(ACCESS_TOKEN_LS, refreshResponse.data.accessToken);
     ls.set(REFRESH_TOKEN_LS, refreshResponse.data.refreshToken);
-
+    errorCount = 0;
     return refreshResponse.data;
   } catch (error) {
-    ls.remove(ACCESS_TOKEN_LS);
-    ls.remove(REFRESH_TOKEN_LS);
+    errorCount++;
+    if (errorCount >= MAX_REFRESH_ERRORS_COUNT) {
+      ls.remove(ACCESS_TOKEN_LS);
+      ls.remove(REFRESH_TOKEN_LS);
+    }
     throw error;
   }
 };
