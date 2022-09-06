@@ -3,12 +3,9 @@ import { authorize } from "@middleware/authorize";
 import { prisma } from "@/database/db";
 
 import _ from "lodash";
+import { updateOrderRoute } from "./updateOrderRoute";
 
-export const wishRoutes: FastifyPluginCallback = (
-  fastify,
-  options,
-  done
-) => {
+export const wishRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.addHook("onRequest", authorize);
 
   fastify.get("/", async (req, res) => {
@@ -16,16 +13,23 @@ export const wishRoutes: FastifyPluginCallback = (
       where: {
         userId: req.user.id,
       },
-    });
-
-    const partners = !!req.user.partnerId && await prisma.wish.findMany({
-      where: {
-        userId: req.user.partnerId,
+      orderBy: {
+        order: "asc",
       },
     });
 
+    const partners =
+      !!req.user.partnerId &&
+      (await prisma.wish.findMany({
+        where: {
+          userId: req.user.partnerId,
+        },
+      }));
+
     res.send({ mine, partners: partners || null });
   });
+
+  fastify.register(updateOrderRoute);
 
   done();
 };

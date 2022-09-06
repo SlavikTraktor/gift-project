@@ -36,6 +36,7 @@ model Wish {
   title       String
   description String?
   link        String?
+  order       Int?
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
 }

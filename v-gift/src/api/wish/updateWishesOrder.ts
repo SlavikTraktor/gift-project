@@ -1,6 +1,5 @@
-import { WishType } from "@/types/Wish";
+import { _post } from "@/heplers/api/fetch";
 
-export const updateWishesOrder = (wishes: WishType[]) => {
-  console.log("updated");
-  return Promise.resolve();
+export const updateWishesOrder = (wishes: number[]) => {
+  return _post("/wish/order", { wishesOrder: wishes });
 };

@@ -21,12 +21,12 @@ export const WishesList = ({
 }: WishesListProps) => {
   const [wishes, setWishes] = useState<WishType[]>([]);
 
-  const updateOrderMutation = useMutation((wishes: WishType[]) => {
+  const updateOrderMutation = useMutation((wishes: number[]) => {
     return updateWishesOrderApi(wishes);
   });
 
   const updateOrderDebounced = useDebouncedCallback((wishes: WishType[]) => {
-    updateOrderMutation.mutate(wishes);
+    updateOrderMutation.mutate(wishes.map((v) => v.id));
   }, 2000);
 
   const onDndDrop = useCallback(() => {
