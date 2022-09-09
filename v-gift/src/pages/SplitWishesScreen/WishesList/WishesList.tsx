@@ -7,6 +7,7 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import { WishDraggable } from "./Wish";
 
 import { useDebouncedCallback } from "use-debounce";
+import { CreateNewWish } from "./CreateNewWish";
 
 export interface WishesListProps {
   name: string;
@@ -68,7 +69,10 @@ export const WishesList = ({
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="p-2">
-        <h1 className="text-3xl border-b border-main-250 mb-2">{name}</h1>
+        <div className="flex border-b border-main-250  mb-2">
+          <h1 className="text-3xl flex-1">{name}</h1>
+          <CreateNewWish editable={editable} />
+        </div>
         {wishes?.map((wish, i) => renderWish(wish, i))}
       </div>
     </DndProvider>

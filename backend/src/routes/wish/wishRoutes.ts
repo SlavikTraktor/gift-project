@@ -4,6 +4,7 @@ import { prisma } from "@/database/db";
 
 import _ from "lodash";
 import { updateOrderRoute } from "./updateOrderRoute";
+import { createNewWishRoute } from "./createNewWishRoute";
 
 export const wishRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.addHook("onRequest", authorize);
@@ -30,6 +31,7 @@ export const wishRoutes: FastifyPluginCallback = (fastify, options, done) => {
   });
 
   fastify.register(updateOrderRoute);
+  fastify.register(createNewWishRoute);
 
   done();
 };
