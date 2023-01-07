@@ -53,7 +53,7 @@ export const updateOrderRoute: FastifyPluginCallback = (
         });
       });
 
-      await Promise.all(updateWishesOrders);
+      await prisma.$transaction(updateWishesOrders);
 
       res.send();
     }

@@ -1,15 +1,6 @@
 import React from "react";
 import cx from "classnames";
 
-// export interface TextInputProps {
-//   onChange: (v: string) => void;
-//   deafultValue?: string;
-//   value?: string;
-//   type?: "password" | "text";
-//   className?: string;
-//   name?: string;
-// }
-
 export type TextInputProps = Omit<React.DetailedHTMLProps<
   React.InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
