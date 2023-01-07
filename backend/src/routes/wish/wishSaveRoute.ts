@@ -2,11 +2,12 @@ import { FastifyPluginCallback } from "fastify";
 import { prisma } from "@/database/db";
 
 import _ from "lodash";
-import { Wish } from "@prisma/client";
 import {
   WishSaveType,
   WishSaveValidation,
 } from "./validations/WishSaveValidation";
+
+// TODO: add html from js clearing cause of security issues
 
 export const wishSaveRoute: FastifyPluginCallback = (
   fastify,
