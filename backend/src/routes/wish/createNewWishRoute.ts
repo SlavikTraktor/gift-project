@@ -12,7 +12,7 @@ export const createNewWishRoute: FastifyPluginCallback = (
   options,
   done
 ) => {
-  fastify.get("/create", async (req, res) => {
+  fastify.post("/create", async (req, res) => {
     const newWish = await prisma.wish.create({
       data: {
         title: WISH_DEAFAULT_TITLE,

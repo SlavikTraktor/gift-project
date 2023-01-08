@@ -46,8 +46,8 @@ export const WishesList = ({
   );
 
   useEffect(() => {
-    wishes_.length && !wishes.length && setWishes([...wishes_]);
-  }, [wishes.length, wishes_]);
+    setWishes([...wishes_]);
+  }, [wishes_]);
 
   const renderWish = useCallback(
     (wish: WishType, index: number) => {
