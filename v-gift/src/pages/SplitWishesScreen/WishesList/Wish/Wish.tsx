@@ -1,7 +1,9 @@
+import { deleteWish } from "@/api/wish/deleteWish";
 import { updateWish, UpdateWishParams } from "@/api/wish/updateWish";
 import { Button } from "@/components/form/Button/Button";
+import { WISHES_QUERY } from "@/constants/api";
 import { WishType } from "@/types/Wish";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 
 export interface WishProps {
@@ -46,6 +48,7 @@ export interface WishProps {
 // }
 
 export const Wish = ({ wish, editable }: WishProps) => {
+  const queryClient = useQueryClient();
   const editableProps = useMemo(
     () => ({
       contentEditable: editable,
@@ -58,6 +61,17 @@ export const Wish = ({ wish, editable }: WishProps) => {
   const saveWishMutation = useMutation((wishParams: UpdateWishParams) => {
     return updateWish(wishParams);
   });
+
+  const deleteWishMutation = useMutation(
+    (wishId: number) => {
+      return deleteWish(wishId);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([WISHES_QUERY]);
+      },
+    }
+  );
 
   const isChanged = useMemo(() => {
     if (title !== wish.title) {
@@ -80,6 +94,10 @@ export const Wish = ({ wish, editable }: WishProps) => {
       description,
     });
   }, [isChanged, title, description, wish.id, saveWishMutation]);
+
+  const onDelete = useCallback(() => {
+    deleteWishMutation.mutate(wish.id);
+  }, [wish.id, deleteWishMutation]);
 
   return (
     <div className="flex-1 text-center p-2">
@@ -110,9 +128,14 @@ export const Wish = ({ wish, editable }: WishProps) => {
         }}
       />
 
-      <Button disabled={!isChanged} onClick={onSave}>
-        Save
-      </Button>
+      <div>
+        <Button onClick={onDelete}>
+          Delete
+        </Button>
+        <Button disabled={!isChanged} onClick={onSave}>
+          Save
+        </Button>
+      </div>
     </div>
   );
 };

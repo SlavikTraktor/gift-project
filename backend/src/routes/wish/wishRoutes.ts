@@ -6,6 +6,7 @@ import _ from "lodash";
 import { updateOrderRoute } from "./updateOrderRoute";
 import { createNewWishRoute } from "./createNewWishRoute";
 import { wishSaveRoute } from "./wishSaveRoute";
+import { deleteWishRoute } from "./deleteWishRoute";
 
 export const wishRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.addHook("onRequest", authorize);
@@ -32,6 +33,7 @@ export const wishRoutes: FastifyPluginCallback = (fastify, options, done) => {
   });
 
   fastify.register(wishSaveRoute);
+  fastify.register(deleteWishRoute);
   fastify.register(updateOrderRoute);
   fastify.register(createNewWishRoute);
 

@@ -7,7 +7,7 @@ import {
   DeleteWishValidation,
 } from "./validations/DeleteWishValidation";
 
-export const updateOrderRoute: FastifyPluginCallback = (
+export const deleteWishRoute: FastifyPluginCallback = (
   fastify,
   options,
   done
