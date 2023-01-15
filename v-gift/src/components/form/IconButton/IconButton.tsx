@@ -1,7 +1,7 @@
 import React from "react";
 import cx from "classnames";
 
-export type ButtonProps = React.DetailedHTMLProps<
+export type IconButtonProps = React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement
 > & {
@@ -9,11 +9,11 @@ export type ButtonProps = React.DetailedHTMLProps<
   border?: boolean;
 };
 
-export const Button = ({ className, border = true, ...props }: ButtonProps) => {
+export const IconButton = ({ className, border = false, ...props }: IconButtonProps) => {
   return (
     <button
       className={cx(
-        "rounded box-border px-3 py-1 duration-100",
+        "rounded-full box-border px-2 py-2 duration-100",
         {
           "hover:bg-main-200": !props.disabled,
           border: border,

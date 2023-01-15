@@ -1,8 +1,9 @@
 import { deleteWish } from "@/api/wish/deleteWish";
 import { updateWish, UpdateWishParams } from "@/api/wish/updateWish";
-import { Button } from "@/components/form/Button/Button";
+import { IconButton } from "@/components/form/IconButton/IconButton";
 import { WISHES_QUERY } from "@/constants/api";
 import { WishType } from "@/types/Wish";
+import { DeleteForever, SaveOutlined } from "@mui/icons-material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
 
@@ -128,14 +129,18 @@ export const Wish = ({ wish, editable }: WishProps) => {
         }}
       />
 
-      <div>
-        <Button onClick={onDelete}>
-          Delete
-        </Button>
-        <Button disabled={!isChanged} onClick={onSave}>
-          Save
-        </Button>
-      </div>
+      {editable && (
+        <div className="flex justify-end">
+          {isChanged && (
+            <IconButton disabled={!isChanged} onClick={onSave}>
+              <SaveOutlined />
+            </IconButton>
+          )}
+          <IconButton onClick={onDelete}>
+            <DeleteForever />
+          </IconButton>
+        </div>
+      )}
     </div>
   );
 };
