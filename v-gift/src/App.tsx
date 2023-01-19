@@ -2,7 +2,6 @@ import React from "react";
 import { ChoosePartner } from "./pages/ChoosePartner";
 import { useQuery } from "@tanstack/react-query";
 import * as ls from "local-storage";
-
 import { SplitWishesScreen } from "./pages/SplitWishesScreen/SplitWishesScreen";
 import { Route, Routes as ReactRouterRoutes } from "react-router-dom";
 import { RedirectRoute } from "@/components/RedirectRoute";

@@ -10,6 +10,7 @@ import { GETAUTH_QUERY } from "@/constants/api";
 export const LoginPage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errAuth, setErrAuth] = useState("");
 
   const queryClient = useQueryClient();
 
@@ -24,6 +25,10 @@ export const LoginPage = () => {
 
         queryClient.invalidateQueries([GETAUTH_QUERY]);
       },
+      onError: (res: any) => {
+        setErrAuth("");
+        setErrAuth(res.response.data.message);
+      },
     }
   );
 
@@ -32,22 +37,29 @@ export const LoginPage = () => {
   }, [login, loginMutation, password]);
 
   return (
-    <div className="flex items-center flex-col mt-6">
-      <h2>Login</h2>
-      <TextInput
-        className="mt-5"
-        onChange={(v) => setLogin(v)}
-        placeholder="Username"
-      />
-      <TextInput
-        className="mt-2"
-        onChange={(v) => setPassword(v)}
-        type="password"
-        placeholder="Password"
-      />
-      <Button onClick={onLogin} className="mt-3">
-        Sign in
-      </Button>
+    <div>
+      <div>
+        <div className="flex items-center flex-col mt-6">
+          <h2>Login</h2>
+          <TextInput
+            className="mt-5"
+            onChange={(v) => setLogin(v)}
+            placeholder="Username"
+          />
+          <TextInput
+            className="mt-2"
+            onChange={(v) => setPassword(v)}
+            type="password"
+            placeholder="Password"
+          />
+          <Button onClick={onLogin} className="mt-3">
+            Sign in
+          </Button>
+        </div>
+        <div>
+          <div>{errAuth}</div>
+        </div>
+      </div>
     </div>
   );
 };
