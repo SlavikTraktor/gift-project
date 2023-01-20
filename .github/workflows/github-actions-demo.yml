@@ -30,7 +30,7 @@ jobs:
       - name: Run backend tests
         run: |
           cd ./backend
-          npm run tests
+          npm run test
       # - name: Cache node modules
       #   id: cache-npm
       #   uses: actions/cache@v3
