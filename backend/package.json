@@ -15,6 +15,7 @@
     "seed": "ts-node",
     "test:setup": "node ./tests/setUpBeforeTests.js",
     "test-watch:win": "npm run test:setup && set APP_ENV=test&& tap --watch --ts ./tests/functional",
+    "test:win": "npm run test:setup && set APP_ENV=test&& tap --ts ./tests/functional",
     "test": "npm run test:setup && tap --ts ./tests/functional"
   },
   "author": "",
