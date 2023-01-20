@@ -10,6 +10,7 @@ import { GETAUTH_QUERY } from "@/constants/api";
 export const LoginPage = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [errAuth, setErrAuth] = useState("");
 
   const queryClient = useQueryClient();
 
@@ -23,6 +24,9 @@ export const LoginPage = () => {
         ls.set(ACCESS_TOKEN_LS, res.data.accessToken);
 
         queryClient.invalidateQueries([GETAUTH_QUERY]);
+      },
+      onError: (res: any) => {
+        setErrAuth(res.response.data.message);
       },
     }
   );
@@ -48,6 +52,7 @@ export const LoginPage = () => {
       <Button onClick={onLogin} className="mt-3">
         Sign in
       </Button>
+      <div className=" mt-2 text-red-600">{errAuth}</div>
     </div>
   );
 };
