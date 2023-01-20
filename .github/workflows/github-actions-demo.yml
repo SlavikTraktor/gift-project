@@ -18,15 +18,7 @@ jobs:
         run: |
           cd ./backend
           npm install
-      - name: Import environment variables from a file
-        id: import-env
-        shell: bash
-        run: |
-          while read line; do
-            echo "$line" >> $GITHUB_ENV
-          done < ${{ env.ENV_FILE }}
       - name: Run backend tests
-        env: ${{ fromJson(steps.import-env.outputs.result) }}
         run: |
           cd ./backend
           npm run test
