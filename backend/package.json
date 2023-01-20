@@ -14,7 +14,8 @@
     "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
     "seed": "ts-node",
     "test:setup": "node ./tests/setUpBeforeTests.js",
-    "test": "npm run test:setup && set APP_ENV=test&& tap --watch --ts ./tests/functional"
+    "test-watch": "npm run test:setup && set APP_ENV=test&& tap --watch --ts ./tests/functional",
+    "test": "npm run test:setup && set APP_ENV=test&& tap --ts ./tests/functional"
   },
   "author": "",
   "license": "ISC",
