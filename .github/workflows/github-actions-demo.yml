@@ -21,6 +21,7 @@ jobs:
       - name: Run backend tests
         run: |
           cd ./backend
+          export APP_ENV=test
           npm run test
       # - name: Cache node modules
       #   id: cache-npm
