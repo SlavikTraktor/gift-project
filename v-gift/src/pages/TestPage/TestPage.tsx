@@ -1,6 +1,5 @@
 import { AsyncSelect } from "@/components/form/AsyncSelect/AsyncSelect";
 import { useCallback, useState } from "react";
-import _ from "lodash";
 import { searchPartners } from "@/api/partner/searchPartners";
 import { SelectOption } from "@/types/selectOption";
 
@@ -18,11 +17,11 @@ export const TestPage = () => {
           res.data.users.map((v) => ({
             value: v.id,
             label: v.name,
-          }))
+          })),
         );
       });
     },
-    []
+    [],
   );
 
   return (

@@ -1,12 +1,14 @@
 import { _get } from "@/heplers/api/fetch";
 
-export interface SearchPartnersRes {
-  users: {
-    id: number;
-    name: string;
-  }[];
+interface SearchPartner {
+  id: number;
+  name: string;
 }
 
-export const searchPartners = (search: string) => {
-  return _get<SearchPartnersRes>("/partner/search", { search });
+export interface SearchPartnersRes {
+  users: SearchPartner[];
+}
+
+export const searchPartners = async (search: string) => {
+  return await _get<SearchPartnersRes>("/partner/search", { search });
 };

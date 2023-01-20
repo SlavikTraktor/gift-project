@@ -54,24 +54,24 @@ export const Wish = ({ wish, editable }: WishProps) => {
     () => ({
       contentEditable: editable,
     }),
-    [editable]
+    [editable],
   );
   const [title, setTitle] = useState(wish.title);
   const [description, setDescription] = useState(wish.description);
 
-  const saveWishMutation = useMutation((wishParams: UpdateWishParams) => {
-    return updateWish(wishParams);
+  const saveWishMutation = useMutation(async (wishParams: UpdateWishParams) => {
+    return await updateWish(wishParams);
   });
 
   const deleteWishMutation = useMutation(
-    (wishId: number) => {
-      return deleteWish(wishId);
+    async (wishId: number) => {
+      return await deleteWish(wishId);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries([WISHES_QUERY]);
       },
-    }
+    },
   );
 
   const isChanged = useMemo(() => {
@@ -108,7 +108,6 @@ export const Wish = ({ wish, editable }: WishProps) => {
         onKeyDown={(e) => {
           if (e.key === "Enter") {
             e.preventDefault();
-            return;
           }
         }}
         onInput={(e) => {

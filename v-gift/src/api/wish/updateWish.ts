@@ -6,6 +6,6 @@ export interface UpdateWishParams {
   description: string | null;
 }
 
-export const updateWish = (params: UpdateWishParams) => {
-  return _post("/wish/save", { ...params });
+export const updateWish = async (params: UpdateWishParams) => {
+  return await _post("/wish/save", { ...params });
 };

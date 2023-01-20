@@ -5,8 +5,8 @@ export interface ChoosePartnerResponse {
   name: string;
 }
 
-export const choosePartner = (partnerName: string) => {
-  return _get<ChoosePartnerResponse>("/partner/choose", {
+export const choosePartner = async (partnerName: string) => {
+  return await _get<ChoosePartnerResponse>("/partner/choose", {
     partnerName,
   });
 };

@@ -28,7 +28,8 @@
     "test": "craco test",
     "eject": "craco eject",
     "start-tailwind": "tailwindcss -i ./src/index.css -o ./dist/output.css --watch",
-    "start": "npm-run-all --parallel start-react start-tailwind"
+    "start": "npm-run-all --parallel start-react start-tailwind",
+    "lint": "eslint ./src"
   },
   "eslintConfig": {
     "extends": [
@@ -49,7 +50,7 @@
     ]
   },
   "devDependencies": {
-    "@craco/craco": "^7.0.0-alpha.3",
+    "@craco/craco": "^7.0.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.2.0",
     "@testing-library/user-event": "^13.5.0",
@@ -58,8 +59,15 @@
     "@types/node": "^16.11.36",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.5",
+    "@typescript-eslint/eslint-plugin": "^5.48.2",
+    "eslint": "^8.32.0",
+    "eslint-config-standard-with-typescript": "^31.0.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^15.6.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.32.1",
     "npm-run-all": "^4.1.5",
     "tailwindcss": "^3.1.6",
-    "typescript": "^4.7.2"
+    "typescript": "^4.9.4"
   }
 }

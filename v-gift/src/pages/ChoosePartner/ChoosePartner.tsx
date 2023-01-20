@@ -15,15 +15,15 @@ export const ChoosePartner = () => {
   const navigate = useNavigate();
 
   const choosePartnerMutation = useMutation(
-    ({ partnerName }: { partnerName: string }) => {
-      return choosePartner(partnerName);
+    async ({ partnerName }: { partnerName: string }) => {
+      return await choosePartner(partnerName);
     },
     {
       onSuccess: (res) => {
         ls.set(PARTNER_NAME_LS, res.data.name);
         navigate(Routes.HOME);
       },
-    }
+    },
   );
 
   const onChange = useCallback(
@@ -32,7 +32,7 @@ export const ChoosePartner = () => {
 
       newVal && choosePartnerMutation.mutate({ partnerName: newVal.label });
     },
-    [choosePartnerMutation]
+    [choosePartnerMutation],
   );
 
   const loadOptions = useCallback(
@@ -42,11 +42,11 @@ export const ChoosePartner = () => {
           res.data.users.map((v) => ({
             value: v.id,
             label: v.name,
-          }))
+          })),
         );
       });
     },
-    []
+    [],
   );
 
   return (

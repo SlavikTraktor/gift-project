@@ -33,9 +33,10 @@ export const WishDraggable = ({
   const ref = useRef<HTMLDivElement>(null);
 
   const [{ handlerId }, drop] = useDrop<
-    DragItem,
-    void,
-    { handlerId: Identifier | null }
+  DragItem,
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  void,
+  { handlerId: Identifier | null }
   >({
     accept: "wish" + dndnamespace,
     collect(monitor) {

@@ -35,7 +35,7 @@ export const SplitWishesScreen = () => {
       <div className="flex-1">
         <WishesList
           name={data.data.name}
-          wishes={wishesData.data.partners || []}
+          wishes={wishesData.data.partners ?? []}
         />
       </div>
     </div>

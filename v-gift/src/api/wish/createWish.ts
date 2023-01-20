@@ -5,7 +5,7 @@ export interface CreateWishParams {
   description?: string;
 }
 
-export const createWish = (params?: CreateWishParams) => {
-  const postParams = params ? { ...params }: undefined;
-  return _post("/wish/create", postParams);
+export const createWish = async (params?: CreateWishParams) => {
+  const postParams = params ? { ...params } : undefined;
+  return await _post("/wish/create", postParams);
 };

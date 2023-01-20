@@ -6,6 +6,6 @@ export interface GetWishesResponse {
   mine: WishType[];
 }
 
-export const getWishes = () => {
-  return _get<GetWishesResponse>("/wish");
+export const getWishes = async () => {
+  return await _get<GetWishesResponse>("/wish");
 };

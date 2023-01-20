@@ -2,9 +2,9 @@ import { _get } from "@/heplers/api/fetch";
 
 interface GetPartnerProps {
   id: number;
-  name: string
+  name: string;
 }
 
-export const getPartner = () => {
-  return _get<GetPartnerProps | null>("/partner/partner");
+export const getPartner = async () => {
+  return await _get<GetPartnerProps | null>("/partner/partner");
 };

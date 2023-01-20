@@ -15,8 +15,8 @@ export const LoginPage = () => {
   const queryClient = useQueryClient();
 
   const loginMutation = useMutation(
-    ({ login, password }: { login: string; password: string }) => {
-      return loginApi(login, password);
+    async ({ login, password }: { login: string, password: string }) => {
+      return await loginApi(login, password);
     },
     {
       onSuccess: (res) => {
@@ -28,7 +28,7 @@ export const LoginPage = () => {
       onError: (res: any) => {
         setErrAuth(res.response.data.message);
       },
-    }
+    },
   );
 
   const onLogin = useCallback(() => {
@@ -40,12 +40,12 @@ export const LoginPage = () => {
       <h2>Login</h2>
       <TextInput
         className="mt-5"
-        onChange={(v) => setLogin(v)}
+        onChange={(v) => { setLogin(v); }}
         placeholder="Username"
       />
       <TextInput
         className="mt-2"
-        onChange={(v) => setPassword(v)}
+        onChange={(v) => { setPassword(v); }}
         type="password"
         placeholder="Password"
       />
