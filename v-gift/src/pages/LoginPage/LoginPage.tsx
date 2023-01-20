@@ -36,25 +36,23 @@ export const LoginPage = () => {
   }, [login, loginMutation, password]);
 
   return (
-    <div>
-      <div className="flex items-center flex-col mt-6">
-        <h2>Login</h2>
-        <TextInput
-          className="mt-5"
-          onChange={(v) => setLogin(v)}
-          placeholder="Username"
-        />
-        <TextInput
-          className="mt-2"
-          onChange={(v) => setPassword(v)}
-          type="password"
-          placeholder="Password"
-        />
-        <Button onClick={onLogin} className="mt-3">
-          Sign in
-        </Button>
-        <div className=" mt-2 text-red-600">{errAuth}</div>
-      </div>
+    <div className="flex items-center flex-col mt-6">
+      <h2>Login</h2>
+      <TextInput
+        className="mt-5"
+        onChange={(v) => setLogin(v)}
+        placeholder="Username"
+      />
+      <TextInput
+        className="mt-2"
+        onChange={(v) => setPassword(v)}
+        type="password"
+        placeholder="Password"
+      />
+      <Button onClick={onLogin} className="mt-3">
+        Sign in
+      </Button>
+      <div className=" mt-2 text-red-600">{errAuth}</div>
     </div>
   );
 };
