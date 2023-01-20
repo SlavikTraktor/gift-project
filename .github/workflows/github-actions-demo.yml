@@ -20,12 +20,11 @@ jobs:
           npm install
       - name: Import environment variables from a file
         id: import-env
-        uses: actions/github-script@v2
-        with:
-          script: |
-            const env = parseEnv(`${process.env.GITHUB_WORKSPACE}/backend/.env.test`);
-            Object.entries(env).forEach(x => core.exportVariable(...x));
-            return env;
+        shell: bash
+        run: |
+          while read line; do
+            echo "$line" >> $GITHUB_ENV
+          done < ${{ env.ENV_FILE }}
       - name: Run backend tests
         env: ${{ fromJson(steps.import-env.outputs.result) }}
         run: |
