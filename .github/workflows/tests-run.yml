@@ -27,9 +27,6 @@ jobs:
         run: |
           cd ./backend
           npm install
-      # - run: |
-      #     echo ${{ github.workspace }}/backend/node-modules
-      #     ls ${{ github.workspace }}/backend/node-modules
       - name: Run backend tests
         run: |
           cd ./backend
