@@ -22,7 +22,7 @@ tap.test("Auth middleware", async (t) => {
       accessToken
     );
 
-    t.equal(response.statusCode, 200);
+    t.equal(response.statusCode, 201);
   });
 
   t.test("with wrong token returns 401", async (t) => {
