@@ -15,19 +15,16 @@ jobs:
         with:
           node-version: 18.8.0
       - name: Cache node modules
-        id: cache-npm
+        id: cache-backend-node-modules
         uses: actions/cache@v3
         env:
           cache-name: cache-frontend-backend-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}-${{ hashFiles('**/v-gift/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+          path: ./backend/node-modules
+          key: ${{ runner.os }}-backend-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}
       - name: Install backend dependencies
+        if: ${{ steps.cache-backend-node-modules.outputs.cache-hit != 'true' }}
         run: |
           cd ./backend
           npm install
