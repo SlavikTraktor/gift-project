@@ -1,4 +1,4 @@
-name: GitHub Actions Demo
+name: Tests
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   pull_request:
@@ -14,15 +14,15 @@ jobs:
         uses: actions/setup-node@v3.6.0
         with:
           node-version: 18.8.0
-      - name: Cache node modules
+      - name: Cache backend node modules
         id: cache-backend-node-modules
         uses: actions/cache@v3
         env:
-          cache-name: cache-frontend-backend-node-modules
+          cache-name: cache-backend-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
           path: ./backend/node-modules
-          key: ${{ runner.os }}-backend-${{ env.cache-name }}-${{ hashFiles('./backend/package-lock.json') }}
+          key: ${{ runner.os }}-backend-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}
       - name: Install backend dependencies
         run: |
           cd ./backend
