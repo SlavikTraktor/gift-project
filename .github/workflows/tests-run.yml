@@ -21,15 +21,15 @@ jobs:
           cache-name: cache-backend-node-modules
         with:
           # npm cache files are stored in `~/.npm` on Linux/macOS
-          path: ${{ github.workspace }}/backend/node-modules
+          path: ${{ github.workspace }}/backend/node_modules
           key: ${{ runner.os }}-backend-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}
       - name: Install backend dependencies
         run: |
           cd ./backend
           npm install
-      - run: |
-          echo ${{ github.workspace }}/backend/node-modules
-          ls ${{ github.workspace }}/backend/node-modules
+      # - run: |
+      #     echo ${{ github.workspace }}/backend/node-modules
+      #     ls ${{ github.workspace }}/backend/node-modules
       - name: Run backend tests
         run: |
           cd ./backend
