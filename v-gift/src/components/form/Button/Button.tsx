@@ -2,11 +2,11 @@ import React from "react";
 import cx from "classnames";
 
 export type ButtonProps = React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
+React.ButtonHTMLAttributes<HTMLButtonElement>,
+HTMLButtonElement
 > & {
-  value?: string;
-  border?: boolean;
+  value?: string,
+  border?: boolean,
 };
 
 export const Button = ({ className, border = true, ...props }: ButtonProps) => {
@@ -16,9 +16,9 @@ export const Button = ({ className, border = true, ...props }: ButtonProps) => {
         "rounded box-border px-3 py-1 duration-100",
         {
           "hover:bg-main-200": !props.disabled,
-          border: border,
+          border,
         },
-        className
+        className,
       )}
       {...props}
     />

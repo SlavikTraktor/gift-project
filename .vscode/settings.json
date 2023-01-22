@@ -1,0 +1,7 @@
+{
+    "eslint.workingDirectories": [
+        "backens",
+        "v-gift"
+    ],
+    "prettier.trailingComma": "all"
+}

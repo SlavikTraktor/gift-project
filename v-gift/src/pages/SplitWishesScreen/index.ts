@@ -1,1 +1,1 @@
-export * from "./SplitWishesScreen"
+export * from "./SplitWishesScreen";

@@ -17,14 +17,14 @@ export const CreateNewWish = ({ editable, className }: CreateNewWishProps) => {
   const queryClient = useQueryClient();
 
   const createWishMutation = useMutation(
-    (wishParams?: CreateWishParams) => {
-      return createWish(wishParams);
+    async (wishParams?: CreateWishParams) => {
+      return await createWish(wishParams);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries([WISHES_QUERY]);
       },
-    }
+    },
   );
 
   const onCreateWish = useCallback(() => {

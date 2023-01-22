@@ -1,5 +1,5 @@
 import { _post } from "@/heplers/api/fetch";
 
-export const deleteWish = (id: number) => {
-  return _post("/wish/delete", { id });
+export const deleteWish = async (id: number) => {
+  return await _post("/wish/delete", { id });
 };

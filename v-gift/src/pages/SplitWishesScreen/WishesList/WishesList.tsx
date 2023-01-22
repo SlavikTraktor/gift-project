@@ -22,8 +22,8 @@ export const WishesList = ({
 }: WishesListProps) => {
   const [wishes, setWishes] = useState<WishType[]>([]);
 
-  const updateOrderMutation = useMutation((wishes: number[]) => {
-    return updateWishesOrderApi(wishes);
+  const updateOrderMutation = useMutation(async (wishes: number[]) => {
+    return await updateWishesOrderApi(wishes);
   });
 
   const updateOrderDebounced = useDebouncedCallback((wishes: WishType[]) => {
@@ -42,7 +42,7 @@ export const WishesList = ({
       wishes[hoverIndex] = item;
       setWishes([...wishes]);
     },
-    [wishes]
+    [wishes],
   );
 
   useEffect(() => {
@@ -63,7 +63,7 @@ export const WishesList = ({
         />
       );
     },
-    [editable, moveDnd, name, onDndDrop]
+    [editable, moveDnd, name, onDndDrop],
   );
 
   return (

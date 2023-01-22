@@ -13,7 +13,7 @@ const config: AxiosRequestConfig = {
 };
 
 // If few requests are made at the same time it can be possible
-// to unlogin cause second refresh request fails. So this prevents this behaviour. 
+// to unlogin cause second refresh request fails. So this prevents this behaviour.
 let errorCount = 0;
 
 const updateTokens = async () => {
@@ -68,22 +68,19 @@ const addAuthData = async (config: AxiosRequestConfig) => {
   }
 };
 
-export const _post = async <T extends any>(
+export const _post = async <T>(
   url: string,
-  data: Record<string, unknown> | undefined = undefined
+  data: Record<string, unknown> | undefined = undefined,
 ) => {
   const configAuth = await addAuthData(config);
-  return axios.post<T>(url, JSON.stringify(data), configAuth);
+  return await axios.post<T>(url, JSON.stringify(data), configAuth);
 };
 
-export const _get = async <T extends any>(
-  url: string,
-  data?: Record<string, unknown>
-) => {
+export const _get = async <T>(url: string, data?: Record<string, unknown>) => {
   const configAuth = await addAuthData(config);
-  return axios.get<T>(
+  return await axios.get<T>(
     url + qs.stringify(data, { arrayFormat: "indices", addQueryPrefix: true }),
-    configAuth
+    configAuth,
   );
 };
 
