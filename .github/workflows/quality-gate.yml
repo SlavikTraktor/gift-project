@@ -23,6 +23,10 @@ jobs:
         with:
           path: ${{ github.workspace }}/v-gift/node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/v-gift/package-lock.json') }}
+      - name: Install frontend dependencies
+        run: |
+          cd ./backend
+          npm install
       - name: Run frontend linter
         run: |
           cd ./v-gift

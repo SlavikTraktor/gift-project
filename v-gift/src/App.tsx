@@ -16,7 +16,7 @@ function App() {
   });
 
   if (token.isLoading) {
-    return <></>;
+    return <>Loading</>;
   }
 
   return (
