@@ -14,7 +14,6 @@ function App() {
   const token = useQuery([GETAUTH_QUERY], () => {
     return ls.get<string>("refreshToken");
   });
-
   if (token.isLoading) {
     return <>Loading</>;
   }
