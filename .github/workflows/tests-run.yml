@@ -23,6 +23,10 @@ jobs:
         with:
           path: ${{ github.workspace }}/backend/node_modules
           key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}
+      - name: Install backend dependencies
+        run: |
+          cd ./backend
+          npm install
       - name: Run backend tests
         run: |
           cd ./backend
