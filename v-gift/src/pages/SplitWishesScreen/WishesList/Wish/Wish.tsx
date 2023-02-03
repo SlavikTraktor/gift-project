@@ -6,7 +6,8 @@ import { WishType } from "@/types/Wish";
 import { DeleteForever, SaveOutlined } from "@mui/icons-material";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback, useMemo, useState } from "react";
-
+import cx from "classnames";
+import { Loader } from "@/components/common/Loader";
 export interface WishProps {
   editable: boolean;
   wish: WishType;
@@ -50,18 +51,27 @@ export interface WishProps {
 
 export const Wish = ({ wish, editable }: WishProps) => {
   const queryClient = useQueryClient();
+
   const editableProps = useMemo(
     () => ({
       contentEditable: editable,
     }),
     [editable],
   );
-  const [title, setTitle] = useState(wish.title);
-  const [description, setDescription] = useState(wish.description);
-
-  const saveWishMutation = useMutation(async (wishParams: UpdateWishParams) => {
-    return await updateWish(wishParams);
-  });
+  const [wishInit, setWishInit] = useState({ ...wish });
+  const [title, setTitle] = useState(wishInit.title);
+  const [description, setDescription] = useState(wishInit.description);
+  const saveWishMutation = useMutation(
+    async (wishParams: UpdateWishParams) => {
+      await new Promise((res) => setTimeout(res, 15000));
+      return await updateWish(wishParams);
+    },
+    {
+      onSuccess: () => {
+        setWishInit((_wishInit) => ({ ..._wishInit, title, description }));
+      },
+    },
+  );
 
   const deleteWishMutation = useMutation(
     async (wishId: number) => {
@@ -75,30 +85,30 @@ export const Wish = ({ wish, editable }: WishProps) => {
   );
 
   const isChanged = useMemo(() => {
-    if (title !== wish.title) {
+    if (title !== wishInit.title) {
       return true;
     }
-    if (description !== wish.description) {
+    if (description !== wishInit.description) {
       return true;
     }
-
     return false;
-  }, [title, wish.title, wish.description, description]);
+  }, [title, wishInit.title, wishInit.description, description]);
 
   const onSave = useCallback(() => {
     if (!isChanged) {
       return;
     }
+
     saveWishMutation.mutate({
-      id: wish.id,
+      id: wishInit.id,
       title,
       description,
     });
-  }, [isChanged, title, description, wish.id, saveWishMutation]);
+  }, [isChanged, title, description, wishInit.id, saveWishMutation]);
 
   const onDelete = useCallback(() => {
-    deleteWishMutation.mutate(wish.id);
-  }, [wish.id, deleteWishMutation]);
+    deleteWishMutation.mutate(wishInit.id);
+  }, [wishInit.id, deleteWishMutation]);
 
   return (
     <div className="flex-1 text-center p-2">
@@ -114,7 +124,7 @@ export const Wish = ({ wish, editable }: WishProps) => {
           setTitle(e.currentTarget.innerHTML);
         }}
         dangerouslySetInnerHTML={{
-          __html: wish.title,
+          __html: wishInit.title,
         }}
       />
       <div
@@ -124,16 +134,26 @@ export const Wish = ({ wish, editable }: WishProps) => {
           setDescription(e.currentTarget.innerHTML);
         }}
         dangerouslySetInnerHTML={{
-          __html: wish.description,
+          __html: wishInit.description,
         }}
       />
 
       {editable && (
-        <div className="flex justify-end">
+        <div className="flex justify-end mt-2">
           {isChanged && (
-            <IconButton disabled={!isChanged} onClick={onSave}>
-              <SaveOutlined />
-            </IconButton>
+            <div>
+              <Loader
+                className={cx("opacity-0", {
+                  "opacity-100": saveWishMutation.isLoading,
+                })}
+              />
+              <IconButton
+                disabled={!isChanged || saveWishMutation.isLoading}
+                onClick={onSave}
+              >
+                <SaveOutlined />
+              </IconButton>
+            </div>
           )}
           <IconButton onClick={onDelete}>
             <DeleteForever />
