@@ -1,0 +1,25 @@
+name: 'Prepare frontend'
+description: 'Prepare frontend'
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.6.0
+      with:
+        node-version: 18.8.0
+    - name: Cache frontend node modules
+      id: cache-frontend-node-modules
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-frontend-node-modules
+      with:
+        # npm cache files are stored in `~/.npm` on Linux/macOS
+        path: ${{ github.workspace }}/v-gift/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/v-gift/package-lock.json') }}
+    - name: Install frontend dependencies
+      run: |
+        cd ./v-gift
+        npm install
+      shell: bash
+
+# - uses: ./.github/actions/hello-world-action
