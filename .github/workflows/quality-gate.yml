@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      - uses: ./.github/actions/prepare-frontend
+      - uses: ${{ github.workspace }}/.github/actions/prepare-frontend
       - name: Run frontend linter
         run: |
           cd ./v-gift
