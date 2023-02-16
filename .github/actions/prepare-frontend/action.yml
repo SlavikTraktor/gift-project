@@ -20,5 +20,6 @@ runs:
       run: |
         cd ./v-gift
         npm install
+      shell: bash
 
 # - uses: ./.github/actions/hello-world-action

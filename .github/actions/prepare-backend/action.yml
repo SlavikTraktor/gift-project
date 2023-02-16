@@ -19,3 +19,4 @@ runs:
       run: |
         cd ./backend
         npm install
+      shell: bash
