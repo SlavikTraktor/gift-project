@@ -1,0 +1,23 @@
+name: 'Prepare backend'
+description: 'Prepare backend'
+runs:
+  using: "composite"
+  steps:
+    - name: Check out repository code
+      uses: actions/checkout@v3
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.6.0
+      with:
+        node-version: 18.8.0
+    - name: Cache backend node modules
+      id: cache-backend-node-modules
+      uses: actions/cache@v3
+      env:
+        cache-name: cache-backend-node-modules
+      with:
+        path: ${{ github.workspace }}/backend/node_modules
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/backend/package-lock.json') }}
+    - name: Install backend dependencies
+      run: |
+        cd ./backend
+        npm install

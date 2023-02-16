@@ -1,32 +1,14 @@
 name: Quality gate
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} runs linters 🚀
 on:
-  workflow_run:
-    workflows: ["Prepare cache"]
-    types:
-      - completed
+  pull_request:
+    branches:
+      - main
 jobs:
   Lint-frontend:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
-        uses: actions/checkout@v3
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v3.6.0
-        with:
-          node-version: 18.8.0
-      - name: Cache frontend node modules
-        id: cache-frontend-node-modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-frontend-node-modules
-        with:
-          path: ${{ github.workspace }}/v-gift/node_modules
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/v-gift/package-lock.json') }}
-      - name: Install frontend dependencies
-        run: |
-          cd ./backend
-          npm install
+      - uses: ./.github/actions/prepare-frontend
       - name: Run frontend linter
         run: |
           cd ./v-gift
