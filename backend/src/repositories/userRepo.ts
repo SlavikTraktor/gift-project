@@ -15,6 +15,7 @@ const getByName = async <T extends Prisma.UserFindFirstArgs>(
   const res = await prisma.user.findFirst<
     Prisma.SelectSubset<T, Prisma.UserFindFirstArgs>
   >({
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     ...args!,
     where: { ...args?.where, name },
   });

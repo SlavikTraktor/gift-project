@@ -49,7 +49,7 @@ export const partnerRoutes: FastifyPluginCallback = (
 
       if (!newPartner) {
         res.code(403);
-        res.send("Partner not found")
+        res.send("Partner not found");
         return;
       }
 

@@ -4,10 +4,11 @@ import qs from "qs";
 export const getInject = (
   instance: typeof app,
   url: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   queryParams?: any,
   authToken?: string
 ) => {
-  const headers: any = {
+  const headers: Record<string, string> = {
     "content-type": "application/json",
   };
 

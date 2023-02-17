@@ -1,6 +1,6 @@
 import Fastify from "fastify";
 import fastifyMiddle from "@fastify/middie";
-import cors from '@fastify/cors'
+import cors from "@fastify/cors";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { setUpEnvs } from "./config";
 
@@ -12,7 +12,7 @@ import { wishRoutes } from "@routes/wish/wishRoutes";
 setUpEnvs();
 
 const fastify = Fastify({
-  logger: process.env.APP_ENV === 'dev',
+  logger: process.env.APP_ENV === "dev",
 }).withTypeProvider<TypeBoxTypeProvider>();
 
 fastify.register(fastifyMiddle);

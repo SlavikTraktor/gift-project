@@ -1,7 +1,6 @@
 import { FastifyPluginCallback } from "fastify";
 import { prisma } from "@/database/db";
 
-import _ from "lodash";
 import {
   WishSaveType,
   WishSaveValidation,

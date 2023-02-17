@@ -16,7 +16,9 @@
     "test:setup": "node ./tests/setUpBeforeTests.js",
     "test-watch:win": "npm run test:setup && set APP_ENV=test&& tap --watch --ts ./tests/functional",
     "test:win": "npm run test:setup && set APP_ENV=test&& tap --ts ./tests/functional",
-    "test": "npm run test:setup && tap --ts ./tests/functional"
+    "test": "npm run test:setup && tap --ts ./tests/functional",
+    "lint": "eslint ./src ./tests",
+    "lint:fix": "eslint ./src ./tests --fix"
   },
   "author": "",
   "license": "ISC",
@@ -45,7 +47,10 @@
     "@types/qs": "^6.9.7",
     "@types/tap": "^15.0.7",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.52.0",
+    "@typescript-eslint/parser": "^5.52.0",
     "dotenv-cli": "^6.0.0",
+    "eslint": "^8.34.0",
     "npm-run-all": "^4.1.5",
     "pino-pretty": "^9.1.0",
     "prisma": "^4.2.1",
