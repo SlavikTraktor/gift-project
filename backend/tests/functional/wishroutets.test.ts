@@ -1,7 +1,6 @@
 import { app } from "@/app";
 import { prisma } from "@/database/db";
 import { User, Wish } from "@prisma/client";
-import { before } from "lodash";
 import tap from "tap";
 import { createUser } from "tests/helpers/createUser";
 import { generateAccessToken } from "tests/helpers/generateAccessToken";
@@ -12,7 +11,7 @@ tap.test("Wish routes tests", async (t) => {
   let wish: Wish;
   let accessToken: string;
 
-  t.beforeEach(async (t) => {
+  t.beforeEach(async () => {
     user = await createUser();
     wish = await prisma.wish.create({
       data: {

@@ -3,9 +3,10 @@ import tap from "tap";
 import { createUser } from "tests/helpers/createUser";
 
 tap.test("Test routes", async (t) => {
-  let user = await createUser();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const user = await createUser();
 
-  t.test('requests the "/test" route', async (t) => {
+  t.test("requests the '/test' route", async (t) => {
     const response = await app.inject({
       method: "GET",
       url: "/test",

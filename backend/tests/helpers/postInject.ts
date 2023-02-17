@@ -3,10 +3,11 @@ import { app } from "@/app";
 export const postInject = (
   instance: typeof app,
   url: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   body: any,
   authToken?: string
 ) => {
-  const headers: any = {
+  const headers: Record<string, string> = {
     "content-type": "application/json",
   };
 

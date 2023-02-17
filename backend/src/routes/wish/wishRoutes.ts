@@ -2,7 +2,6 @@ import { FastifyPluginCallback } from "fastify";
 import { authorize } from "@middleware/authorize";
 import { prisma } from "@/database/db";
 
-import _ from "lodash";
 import { updateOrderRoute } from "./updateOrderRoute";
 import { createNewWishRoute } from "./createNewWishRoute";
 import { wishSaveRoute } from "./wishSaveRoute";
