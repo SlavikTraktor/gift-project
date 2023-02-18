@@ -3,5 +3,6 @@
         "backend",
         "v-gift"
     ],
-    "prettier.trailingComma": "all"
+    "prettier.trailingComma": "all",
+    "files.eol": "\n"
 }
