@@ -48,6 +48,7 @@ export const wishSaveRoute: FastifyPluginCallback = (
         data: {
           title: req.body.title,
           description: req.body.description,
+          color: req.body.color,
         },
       });
 
