@@ -18,11 +18,11 @@ export const regCredentials = async (body: {
   });
 
   if (userName) {
-    throw new Error(`Username ${userName} already exists`);
+    throw new Error(`Username ${userName.name} already exists`);
   }
 
   if (userEmail) {
-    throw new Error(`User with email: ${userEmail} already exists`);
+    throw new Error(`User with email: ${userEmail.email} already exists`);
   }
 
   await prisma.user.create({
