@@ -1,4 +1,4 @@
-import {  regCredentials } from "@/services/regService";
+import { regCredentials } from "@/services/regService";
 import { FastifyPluginCallback } from "fastify";
 import {
   PostCredentialType,
@@ -16,13 +16,13 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
       },
     },
     async (req, res) => {
-        try {
-            await regCredentials(req.body)
-        } catch (error){
-            res.code(403);
-            res.send(error);
-        }
-    //   res.send({ hello: "Sosizopu" });
+      try {
+        await regCredentials(req.body);
+      } catch (error) {
+        res.code(403);
+        res.send(error);
+      }
+      //   res.send({ hello: "Sosizopu" });
     },
   );
   done();
