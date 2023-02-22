@@ -6,11 +6,11 @@ export const PostCredentialValidation = Type.Object({
     maxLength: 25,
   }),
   email: Type.String({
-    minLength: 6,
+    minLength: 8,
     maxLength: 25,
   }),
   password: Type.String({
-    minLength: 5,
+    minLength: 8,
     maxLength: 25,
   }),
 });
