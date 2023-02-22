@@ -4,10 +4,12 @@ import cors from "@fastify/cors";
 import { TypeBoxTypeProvider } from "@fastify/type-provider-typebox";
 import { setUpEnvs } from "./config";
 
+
 import { authRoutes } from "@routes/auth";
 import { partnerRoutes } from "@routes/partner";
 import { privateTestRoutes, testRoutes } from "@routes/test";
 import { wishRoutes } from "@routes/wish/wishRoutes";
+import { regRoutes } from "./routes/register/regRoute";
 
 setUpEnvs();
 
@@ -19,6 +21,7 @@ fastify.register(fastifyMiddle);
 
 fastify.register(cors);
 
+fastify.register(regRoutes, { prefix: "/register" });
 fastify.register(authRoutes, { prefix: "/auth" });
 fastify.register(partnerRoutes, { prefix: "/partner" });
 fastify.register(wishRoutes, { prefix: "/wish" });
