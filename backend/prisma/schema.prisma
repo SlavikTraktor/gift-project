@@ -37,6 +37,7 @@ model Wish {
   description String?
   link        String?
   order       Int?
+  color       String?
   userId      Int
   user        User    @relation(fields: [userId], references: [id])
 }
