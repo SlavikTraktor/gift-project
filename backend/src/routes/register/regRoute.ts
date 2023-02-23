@@ -22,7 +22,6 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
         res.code(403);
         res.send(error);
       }
-      //   res.send({ hello: "Sosizopu" });
     },
   );
   done();
