@@ -53,6 +53,7 @@ export const getGoogleTokenAndReg = async (code: unknown) => {
     });
     return generateNewTokenPair(userC.id);
   }
+  return generateNewTokenPair(userF.id);
 };
 
 const generateNewTokenPair = async (userId: number) => {
