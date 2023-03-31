@@ -13,7 +13,7 @@ export const regCredentials = async (body: {
 
   const userEmail = await prisma.user.findFirst({
     where: {
-      email: body.email,
+      email: body.email, 
     },
   });
 
