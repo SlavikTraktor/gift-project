@@ -1,5 +1,8 @@
 import { regCredentials } from "@/services/regService";
-import { getGoogleTokenAndReg, regGoogleLink } from "@/services/authGoogleService";
+import {
+  getGoogleTokenAndReg,
+  regGoogleLink,
+} from "@/services/authGoogleService";
 import { FastifyPluginCallback } from "fastify";
 import {
   PostCredentialType,
@@ -27,13 +30,13 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   );
 
   fastify.get("/google", async (req, res) => {
-    //const url = await regGoogleLink();
     res.send(await regGoogleLink());
   });
 
-  fastify.get("/google/callback", async (req, res) => {
+  fastify.get<{Querystring: { code:string }}>("/google/callback", async (req, res) => {
+    console.log(req.query);
     try {
-      const tokens = await getGoogleTokenAndReg(req.query);
+      const tokens = await getGoogleTokenAndReg(req.query.code);
       res.send(tokens);
     } catch (error) {
       res.code(403);

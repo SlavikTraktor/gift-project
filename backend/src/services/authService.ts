@@ -13,7 +13,6 @@ export const loginUser = async (name: string, pass: string) => {
   if (!user) {
     throw new Error("User not found");
   }
-  
   if (user.googleReg == true) {
     throw new Error("Login through Google");
   }
@@ -64,7 +63,7 @@ export const logout = async (refreshToken: string) => {
   });
 };
 
-const generateNewTokenPair = async (userId: number) => {
+export const generateNewTokenPair = async (userId: number) => {
   const accessToken = jwt.sign({ id: userId }, process.env.AUTH_SECRET, {
     expiresIn: "15m",
   });
