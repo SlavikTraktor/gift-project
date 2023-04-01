@@ -52,5 +52,5 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   //   res.send(await regDiscordLink());
   // });
 
-  // done();
+  done();
 };
