@@ -8,6 +8,7 @@ import {
   PostCredentialType,
   PostCredentialValidation,
 } from "./types/postCredentials";
+// import { regDiscordLink } from "@/services/authDiscordService";
 
 export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.post<{
@@ -33,15 +34,23 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     res.send(await regGoogleLink());
   });
 
-  fastify.get<{Querystring: { code:string }}>("/google/callback", async (req, res) => {
-    console.log(req.query);
-    try {
-      const tokens = await getGoogleTokenAndReg(req.query.code);
-      res.send(tokens);
-    } catch (error) {
-      res.code(403);
-      res.send(error);
-    }
-  });
-  done();
+  fastify.get<{ Querystring: { code: string } }>(
+    "/google/callback",
+    async (req, res) => {
+      console.log(req.query);
+      try {
+        const tokens = await getGoogleTokenAndReg(req.query.code);
+        res.send(tokens);
+      } catch (error) {
+        res.code(403);
+        res.send(error);
+      }
+    },
+  );
+
+  // fastify.get("/discord", async (req, res) => {
+  //   res.send(await regDiscordLink());
+  // });
+
+  // done();
 };

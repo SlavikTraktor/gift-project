@@ -1,22 +1,24 @@
 import { generateNewTokenPair } from "@services/authService";
-import { oAuth2Client } from "@/clients/google";
+import { googleOauth2Client } from "@/clients/google";
 import { prisma } from "@/database/db";
 import { getGoogleInfo } from "@/requests/googleRequests";
+
 const scopes = [
   "https://www.googleapis.com/auth/userinfo.email",
   "https://www.googleapis.com/auth/userinfo.profile",
 ];
 
 export const regGoogleLink = async () => {
-  const client = oAuth2Client();
+  const client = googleOauth2Client();
   const url = client.generateAuthUrl({
     access_type: "offline",
     scope: scopes,
   });
   return url;
 };
+
 export const getGoogleTokenAndReg = async (code: string) => {
-  const client = oAuth2Client();
+  const client = googleOauth2Client();
   const { tokens } = await client.getToken(code);
   client.setCredentials({
     access_token: tokens.access_token,

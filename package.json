@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "discord-oauth2": "^2.11.0"
+  }
+}
