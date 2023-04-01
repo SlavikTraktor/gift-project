@@ -8,7 +8,6 @@ import {
   PostCredentialType,
   PostCredentialValidation,
 } from "./types/postCredentials";
-// import { regDiscordLink } from "@/services/authDiscordService";
 
 export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.post<{
@@ -47,10 +46,6 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
       }
     },
   );
-
-  // fastify.get("/discord", async (req, res) => {
-  //   res.send(await regDiscordLink());
-  // });
 
   done();
 };
