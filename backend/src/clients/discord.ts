@@ -7,13 +7,13 @@ if (!clientId) {
 }
 
 const clientSecret = process.env.DISCORD_CLIENT_SECRET;
-if (!clientId) {
+if (!clientSecret) {
   console.error("DISCORD_CLIENT_SECRET is not defined");
   process.exit(1);
 }
 
 const redirectUri = process.env.DISCORD_REDIRECT_URI;
-if (!clientId) {
+if (!redirectUri) {
   console.error("DISCORD_REDIRECT_URI is not defined");
   process.exit(1);
 }

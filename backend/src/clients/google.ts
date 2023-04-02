@@ -7,13 +7,13 @@ if (!clientId) {
 }
 
 const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-if (!clientId) {
+if (!clientSecret) {
   console.error("GOOGLE_CLIENT_SECRET is not defined");
   process.exit(1);
 }
 
 const redirectUri = process.env.GOOGLE_REDIRECT_URI;
-if (!clientId) {
+if (!redirectUri) {
   console.error("GOOGLE_REDIRECT_URI is not defined");
   process.exit(1);
 }
