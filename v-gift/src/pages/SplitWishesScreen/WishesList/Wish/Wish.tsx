@@ -61,9 +61,10 @@ export const Wish = ({ wish, editable }: WishProps) => {
   const [wishInit, setWishInit] = useState({ ...wish });
   const [title, setTitle] = useState(wishInit.title);
   const [description, setDescription] = useState(wishInit.description);
+
   const saveWishMutation = useMutation(
     async (wishParams: UpdateWishParams) => {
-      await new Promise((res) => setTimeout(res, 15000));
+      await new Promise((res) => setTimeout(res, 2000));
       return await updateWish(wishParams);
     },
     {
@@ -143,7 +144,8 @@ export const Wish = ({ wish, editable }: WishProps) => {
           {isChanged && (
             <div>
               <Loader
-                className={cx("opacity-0", {
+                className={cx({
+                  "opacity-0": !saveWishMutation.isLoading,
                   "opacity-100": saveWishMutation.isLoading,
                 })}
               />

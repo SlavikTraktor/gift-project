@@ -13,7 +13,7 @@ export const Button = ({ className, border = true, ...props }: ButtonProps) => {
   return (
     <button
       className={cx(
-        "rounded box-border px-3 py-1 duration-100",
+        "rounded box-border px-3 py-1 duration-100 mt-2",
         {
           "hover:bg-main-200": !props.disabled,
           border,

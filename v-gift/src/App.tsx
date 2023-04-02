@@ -9,6 +9,7 @@ import { Routes } from "./constants/routes";
 import { LoginPage } from "@/pages/LoginPage";
 import { TestPage } from "@/pages/TestPage";
 import { GETAUTH_QUERY } from "./constants/api";
+import { RegistrationPage } from "./pages/RegistrationPage";
 
 function App() {
   const token = useQuery([GETAUTH_QUERY], () => {
@@ -29,6 +30,7 @@ function App() {
           <Route path={Routes.HOME} element={<SplitWishesScreen />} />
           <Route path={Routes.TEST} element={<TestPage />} />
         </Route>
+
         <Route
           path="/"
           element={
@@ -39,6 +41,7 @@ function App() {
           }
         >
           <Route path={Routes.LOGIN} element={<LoginPage />} />
+          <Route path={Routes.REGISTRATION} element={<RegistrationPage />} />
         </Route>
       </ReactRouterRoutes>
     </div>
