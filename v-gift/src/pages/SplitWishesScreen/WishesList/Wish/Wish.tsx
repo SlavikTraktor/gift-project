@@ -64,7 +64,6 @@ export const Wish = ({ wish, editable }: WishProps) => {
 
   const saveWishMutation = useMutation(
     async (wishParams: UpdateWishParams) => {
-      // await new Promise((res) => setTimeout(res, 2000));
       return await updateWish(wishParams);
     },
     {
