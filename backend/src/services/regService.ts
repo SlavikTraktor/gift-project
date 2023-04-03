@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { prisma } from "@/database/db";
 
 export const regCredentials = async (body: {
@@ -24,12 +25,14 @@ export const regCredentials = async (body: {
   if (userEmail) {
     throw new Error(`User with email: ${userEmail.email} already exists`);
   }
+  const salt = await bcrypt.genSalt(10);
+  const password = await bcrypt.hash(body.password, salt);
 
   await prisma.user.create({
     data: {
       email: body.email,
       name: body.name,
-      password: body.password,
+      password,
     },
   });
 };

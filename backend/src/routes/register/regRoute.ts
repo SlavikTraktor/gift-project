@@ -39,7 +39,9 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     res.send(await regGoogleLink());
   });
 
+
   fastify.get<{ Querystring: GetGoogleCredentialType, }>(
+
     "/google/callback",
     async (req, res) => {
       console.log(req.query);
@@ -52,6 +54,7 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
       }
     },
   );
+
 
   fastify.get("/discord", async (req, res) => {
     res.send(await regDiscordLink());

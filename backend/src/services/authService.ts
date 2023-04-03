@@ -13,6 +13,7 @@ export const loginUser = async (name: string, pass: string) => {
   if (!user) {
     throw new Error("User not found");
   }
+
   if (user.googleReg == true) {
     throw new Error("Login through Google");
   }
@@ -20,7 +21,11 @@ export const loginUser = async (name: string, pass: string) => {
     throw new Error("Login through Discord");
   }
 
-  const validatePassword = await bcrypt.compare(pass, user.password as string);
+  if (user.password == null) {
+    throw new Error("Invalid password");
+  }
+
+  const validatePassword = await bcrypt.compare(pass, user.password);
   if (!validatePassword) {
     throw new Error("Invalid password");
   }

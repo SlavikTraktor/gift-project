@@ -49,5 +49,15 @@ module.exports = {
     "react/react-in-jsx-scope": ["off"],
     "promise/param-names": ["off"],
     "react/prop-types": ["off"],
+    "@typescript-eslint/no-misused-promises": [
+      "error",
+      {
+        checksVoidReturn: {
+          arguments: false,
+          attributes: false,
+        },
+      },
+    ],
+    "react/display-name": ["off"],
   },
 };
