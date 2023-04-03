@@ -33,7 +33,7 @@ export const getDiscordTokenAndReg = async (code: string, state: string) => {
     create: {
       email: data.email,
       name: data.username,
-      googleReg: true,
+      discordReg: true,
     },
     update: {},
   });
