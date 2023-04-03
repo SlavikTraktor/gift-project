@@ -30,8 +30,7 @@ export function RegistrationPage() {
 
   const registrationMutation = useMutation(
     async ({ email, name, password }: RegisterParams) => {
-      await new Promise((res) => setTimeout(res, 2000));
-
+      // await new Promise((res) => setTimeout(res, 2000));
       return await registrationApi({ email, name, password });
     },
     {
@@ -83,7 +82,7 @@ export function RegistrationPage() {
         <Loader
           className={cx({
             "opacity-0": !registrationMutation.isLoading,
-            "opacity-100": registrationMutation.isLoading,
+            // "opacity-100": registrationMutation.isLoading,
           })}
         />
       </form>
