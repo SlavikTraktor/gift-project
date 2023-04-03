@@ -32,6 +32,8 @@
     "bcrypt": "^5.0.1",
     "dotenv": "^16.0.1",
     "fastify": "^4.3.0",
+    "google-auth-library": "^8.7.0",
+    "googleapis": "^114.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
     "nodemon": "^2.0.19",

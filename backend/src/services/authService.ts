@@ -14,6 +14,14 @@ export const loginUser = async (name: string, pass: string) => {
     throw new Error("User not found");
   }
 
+  if (user.googleReg == true) {
+    throw new Error("Login through Google");
+  }
+
+  if (user.password == null) {
+    throw new Error("Invalid password");
+  }
+
   const validatePassword = await bcrypt.compare(pass, user.password);
   if (!validatePassword) {
     throw new Error("Invalid password");
@@ -60,7 +68,7 @@ export const logout = async (refreshToken: string) => {
   });
 };
 
-const generateNewTokenPair = async (userId: number) => {
+export const generateNewTokenPair = async (userId: number) => {
   const accessToken = jwt.sign({ id: userId }, process.env.AUTH_SECRET, {
     expiresIn: "15m",
   });
