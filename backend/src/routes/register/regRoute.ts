@@ -12,6 +12,8 @@ import {
   getDiscordTokenAndReg,
   regDiscordLink,
 } from "@/services/authDiscordService";
+import { GetGoogleCredentialType } from "./types/googleCredentials";
+import { GetDiscordCredentialType } from "./types/discordCredentials";
 
 export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.post<{
@@ -37,7 +39,7 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     res.send(await regGoogleLink());
   });
 
-  fastify.get<{ Querystring: { code: string } }>(
+  fastify.get<{ Querystring: GetGoogleCredentialType, }>(
     "/google/callback",
     async (req, res) => {
       console.log(req.query);
@@ -55,7 +57,7 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     res.send(await regDiscordLink());
   });
 
-  fastify.get<{ Querystring: { code: string; state: string } }>(
+  fastify.get<{ Querystring: GetDiscordCredentialType}>(
     "/discord/callback",
     async (req, res) => {
       console.log(req.query);
