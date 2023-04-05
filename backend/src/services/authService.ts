@@ -19,8 +19,10 @@ export const loginUser = async (name: string, pass: string) => {
   if (user.discordReg == true) {
     throw new Error("Login through Discord");
   }
-
-  const validatePassword = await bcrypt.compare(pass, user.password as string);
+  if (user.password == null) {
+    throw new Error("Invalid pasword");
+  }
+  const validatePassword = await bcrypt.compare(pass, user.password);
   if (!validatePassword) {
     throw new Error("Invalid password");
   }
