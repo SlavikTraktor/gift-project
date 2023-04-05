@@ -3,21 +3,16 @@ import { discordOauth2Client } from "@/clients/discord";
 import { prisma } from "@/database/db";
 
 const scopes = ["identify", "email"];
-const randomStateValue = Math.random().toString(16).substr(2);
 
 export const regDiscordLink = async () => {
   const client = discordOauth2Client();
   const url = client.generateAuthUrl({
     scope: scopes,
-    state: randomStateValue,
   });
   return url;
 };
 
-export const getDiscordTokenAndReg = async (code: string, state: string) => {
-  if (state !== randomStateValue) {
-    throw new Error("Invalid State parameter");
-  }
+export const getDiscordTokenAndReg = async (code: string) => {
   const client = discordOauth2Client();
   const tokens = await client.tokenRequest({
     code,
