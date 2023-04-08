@@ -38,7 +38,6 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     res.send(await regGoogleLink());
   });
 
-
   fastify.get<{ Querystring: {code: string} }>(
 
     "/google/callback",
@@ -53,7 +52,6 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
     },
   );
 
-
   fastify.get("/discord", async (req, res) => {
     res.send(await regDiscordLink());
   });
@@ -61,7 +59,6 @@ export const regRoutes: FastifyPluginCallback = (fastify, options, done) => {
   fastify.get<{ Querystring: {code: string}}>(
     "/discord/callback",
     async (req, res) => {
-      console.log(req.query);
       try {
         const tokens = await getDiscordTokenAndReg(
           req.query.code,
