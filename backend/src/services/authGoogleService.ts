@@ -25,20 +25,14 @@ export const getGoogleTokenAndReg = async (code: string) => {
     refresh_token: tokens.refresh_token,
   });
   const { data } = await getGoogleInfo(client);
-  const user = await prisma.user.findFirst({
-    where: {
+  const user = await prisma.user.upsert({
+    where: { email: data.email },
+    create: {
       email: data.email,
+      name: data.name,
+      googleReg: true,
     },
+    update: {},
   });
-  if (!user) {
-    const newUser = await prisma.user.create({
-      data: {
-        email: data.email,
-        name: data.name,
-        googleReg: true,
-      },
-    });
-    return generateNewTokenPair(newUser.id);
-  }
   return generateNewTokenPair(user.id);
 };

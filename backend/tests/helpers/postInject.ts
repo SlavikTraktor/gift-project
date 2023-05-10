@@ -4,7 +4,7 @@ export const postInject = (
   instance: typeof app,
   url: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  body: any,
+  body?: any,
   authToken?: string
 ) => {
   const headers: Record<string, string> = {
@@ -18,7 +18,7 @@ export const postInject = (
   return instance.inject({
     method: "POST",
     url,
-    payload: JSON.stringify(body),
+    payload: body ? JSON.stringify(body) : undefined,
     headers,
   });
 };

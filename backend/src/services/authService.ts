@@ -17,6 +17,9 @@ export const loginUser = async (name: string, pass: string) => {
   if (user.googleReg == true) {
     throw new Error("Login through Google");
   }
+  if (user.discordReg == true) {
+    throw new Error("Login through Discord");
+  }
 
   if (user.password == null) {
     throw new Error("Invalid password");
