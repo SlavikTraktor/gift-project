@@ -8,7 +8,7 @@ import { ACCESS_TOKEN_LS, REFRESH_TOKEN_LS } from "@/constants/ls";
 
 const config: AxiosRequestConfig = {
   baseURL: BACKEND_URL,
-  timeout: 1000,
+  timeout: 10000,
   headers: { "content-type": "application/json" },
 };
 
