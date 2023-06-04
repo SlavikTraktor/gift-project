@@ -28,4 +28,4 @@ fastify.register(wishRoutes, { prefix: "/wish" });
 fastify.register(testRoutes, { prefix: "/test" });
 fastify.register(privateTestRoutes, { prefix: "/testprivate" });
 
-export const app = fastify;
+export default fastify;
