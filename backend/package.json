@@ -10,6 +10,7 @@
     "watch-alias": "tsc-alias -w",
     "watch-js": "nodemon",
     "build": "tsc && tsc-alias",
+    "build:vercel": "prisma migrate dev && npm run build",
     "migrate:create": "prisma migrate dev --create-only",
     "migrate": "prisma migrate dev",
     "migrate:test": "dotenv -e .env.test -- prisma migrate dev",
