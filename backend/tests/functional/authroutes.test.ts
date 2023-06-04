@@ -1,4 +1,4 @@
-import { app } from "@/app";
+import app from "@/app";
 import { prisma } from "@/database/db";
 import tap from "tap";
 import { createUser } from "tests/helpers/createUser";

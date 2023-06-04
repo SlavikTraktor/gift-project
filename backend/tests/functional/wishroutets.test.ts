@@ -1,4 +1,4 @@
-import { app } from "@/app";
+import app from "@/app";
 import { prisma } from "@/database/db";
 import { User, Wish } from "@prisma/client";
 import tap from "tap";
