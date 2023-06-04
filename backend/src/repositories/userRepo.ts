@@ -36,7 +36,7 @@ const addPartner = async (userId: number, partnerId: number) => {
 const searchUsers = async (search: string, countToGet = 10) => {
   return prisma.$queryRaw<
     Pick<User, "id" | "name">[]
-  >`SELECT id, name from User where lower(name) like '%' || ${search} || '%' limit ${countToGet}`;
+  >`SELECT id, name from "User" where lower(name) like '%' || ${search} || '%' limit ${countToGet}`;
 };
 
 export const userRepo = {
